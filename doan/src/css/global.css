@@ -1,0 +1,171 @@
+* *::after *::before {
+  box-sizing: border-box;
+}
+
+html,
+body,
+body div,
+span,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+abbr,
+address,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+samp,
+sub,
+sup,
+var,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+figure,
+footer,
+header,
+menu,
+nav,
+section,
+time,
+mark,
+audio,
+video,
+details,
+summary {
+  margin: 0;
+  margin-left: 0px;
+  padding: 0;
+  padding-top: 0px;
+  border: 0;
+  font-size: 100%;
+  font-weight: normal;
+  vertical-align: baseline;
+  background: transparent;
+}
+
+.login-form {
+  position: absolute;
+  width: 400px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 5px;
+  padding: 100px 50px 100px 50px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.16);
+}
+
+.web-laptop-layout {
+  background-image: url("/src/css/background.jpg");
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.web-laptop-login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 100%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+}
+
+a {
+  text-decoration: none;
+}
+
+.message-notice {
+  height: 30px;
+}
+
+.btn-red {
+  background-color: #cd1818;
+}
+
+.web-laptop-header {
+  display: block;
+}
+
+.web-laptop-top {
+  position: relative;
+  z-index: 1000;
+  height: 56px;
+  background-color: #cd1818;
+}
+
+.web-laptop-nav {
+  width: 1200px;
+  position: relative;
+  margin: 0 auto;
+}
+
+.web-laptop-search {
+  float: left;
+  margin-top: 10px;
+}
+
+.web-laptop-choose {
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: right;
+  display: flex;
+}
+
+.web-laptop-choose li {
+  height: 56px;
+  line-height: 1;
+  padding-top: 6px;
+  margin-left: 24px;
+  text-align: center;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.web-laptop-choose li a {
+  font-size: 14px;
+}
+
+.web-laptop-choose li:hover {
+  background-color: #fff;
+  color: #cd1818;
+  border-radius: 6px;
+}
+
