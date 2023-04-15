@@ -7,9 +7,10 @@ import {
   getMessageNoticeSignin,
   getUserInfo,
   stateGlobal,
-} from "../Reducer/GlobalReducer/GlobalReducer";
+} from "../../../Reducer/GlobalReducer/GlobalReducer";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { openNotification } from "../../SupportView/Notification/Notification";
 export default function Signin() {
   let history = useHistory();
   const dispatch = useDispatch();
@@ -49,6 +50,7 @@ export default function Signin() {
         );
         if (response.data.code === 0) {
           dispatch(getUserInfo(response.data.data[0]));
+          dispatch(openNotification("SUCCESS", "Đăng ký thành công"));
           history.push("/");
         } else {
           dispatch(getMessageNoticeSignin(response.data.msg));

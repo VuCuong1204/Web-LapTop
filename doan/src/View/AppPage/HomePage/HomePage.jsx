@@ -1,17 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import {
-  getUserInfo,
   logout,
   stateGlobal,
-} from "../Reducer/GlobalReducer/GlobalReducer";
+} from "../../../Reducer/GlobalReducer/GlobalReducer";
 import _ from "lodash";
-import { Button, Dropdown, Input, Menu, Popover } from "antd";
-import { LogoutOutlined, KeyOutlined, UserOutlined } from "@ant-design/icons";
+import {Input, Menu, Popover } from "antd";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import SvgIcon from "@mui/material/SvgIcon";
-import Search from "antd/lib/transfer/search";
+
 
 export default function HomePage() {
   const { userInfo } = useSelector(stateGlobal);

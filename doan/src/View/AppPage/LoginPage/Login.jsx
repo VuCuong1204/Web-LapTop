@@ -9,8 +9,9 @@ import {
   getMessageNotice,
   getUserInfo,
   stateGlobal,
-} from "../Reducer/GlobalReducer/GlobalReducer";
+} from "../../../Reducer/GlobalReducer/GlobalReducer";
 import axios from "axios";
+import { openNotification } from "../../SupportView/Notification/Notification";
 export default function Login(props) {
   const { messageNotice } = useSelector(stateGlobal);
   const dispatch = useDispatch();
@@ -39,8 +40,9 @@ export default function Login(props) {
           }
         );
         if (response.data.code === 0) {
-          history.push("/");
           dispatch(getUserInfo(response.data.data[0]));
+          history.push("/");
+          dispatch(openNotification("SUCCESS","Đăng nhập thành công"));
         } else {
           dispatch(getMessageNotice(response.data.msg));
         }

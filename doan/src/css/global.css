@@ -162,10 +162,3 @@ a {
 .web-laptop-choose li a {
   font-size: 14px;
 }
-
-.web-laptop-choose li:hover {
-  background-color: #fff;
-  color: #cd1818;
-  border-radius: 6px;
-}
-
