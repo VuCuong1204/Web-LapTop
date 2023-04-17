@@ -12,6 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../src/css/global.css";
 import "../src/css/cssantd.css";
 import 'react-notifications/lib/notifications.css';
+import 'react-calendar/dist/Calendar.css';
 
 //import 'bootstrap/dist/css/bootstrap.css';
 

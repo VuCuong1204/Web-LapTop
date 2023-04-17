@@ -40,7 +40,7 @@ export default function HomePage() {
       <div className="web-laptop-header">
         <div className="web-laptop-top">
           <div className="web-laptop-nav">
-            <div className="web-laptop-logo"></div>
+            <div className="web-laptop-nav-logo"></div>
             <ul className="web-laptop-choose">
               <li></li>
               <li></li>

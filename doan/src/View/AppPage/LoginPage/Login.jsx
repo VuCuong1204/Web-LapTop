@@ -42,7 +42,7 @@ export default function Login(props) {
         if (response.data.code === 0) {
           dispatch(getUserInfo(response.data.data[0]));
           history.push("/");
-          dispatch(openNotification("SUCCESS","Đăng nhập thành công"));
+          dispatch(openNotification("SUCCESS", "Đăng nhập thành công"));
         } else {
           dispatch(getMessageNotice(response.data.msg));
         }
@@ -57,69 +57,80 @@ export default function Login(props) {
   }
   return (
     <div className="web-laptop-layout">
-      <div className="web-laptop-login">
-        <form onSubmit={formik.handleSubmit} className="login-form">
-          <div class="form-outline">
-            <Input
-              placeholder="Tên đăng nhập"
-              id="username"
-              className="username ant-input-custom"
-              onChange={(e) => {
-                formik.handleChange(e);
-                dispatch(getMessageNotice(""));
-              }}
-              onBlur={formik.handleBlur}
-              value={formik.values.username}
-            />
-            <div className="message-notice">
-              {formik.touched.username && formik.errors.username ? (
-                <span className="text-danger">{formik.errors.username}</span>
-              ) : null}
-            </div>
-          </div>
-          <div class="form-outline">
-            <Input.Password
-              placeholder="Mật khẩu"
-              id="password"
-              className="password ant-input-password-custom"
-              onChange={(e) => {
-                formik.handleChange(e);
-                dispatch(getMessageNotice(""));
-              }}
-              onBlur={formik.handleBlur}
-              value={formik.values.password}
-              status={
-                formik.touched.password && formik.errors.password
-                  ? "error "
-                  : ""
-              }
-            />
-            <div className="message-notice">
-              {formik.touched.password && formik.errors.password ? (
-                <span className="text-danger">{formik.errors.password}</span>
-              ) : (
-                <span className="text-danger">{messageNotice}</span>
-              )}
-            </div>
-          </div>
+      <div className="login-form">
+        <span className="borderLine"></span>
+        <div className="web-laptop-login-content">
+          <div className="web-laptop-logo"></div>
+          <div className="web-laptop-loginform">
+            <form
+              onSubmit={formik.handleSubmit}
+              className="web-laptop-login-form"
+            >
+              <div class="form-outline">
+                <Input
+                  placeholder="Tên đăng nhập"
+                  id="username"
+                  className="username ant-input-custom"
+                  onChange={(e) => {
+                    formik.handleChange(e);
+                    dispatch(getMessageNotice(""));
+                  }}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.username}
+                />
+                <div className="message-notice">
+                  {formik.touched.username && formik.errors.username ? (
+                    <span className="text-danger">
+                      {formik.errors.username}
+                    </span>
+                  ) : null}
+                </div>
+              </div>
+              <div class="form-outline">
+                <Input.Password
+                  placeholder="Mật khẩu"
+                  id="password"
+                  className="password ant-input-password-custom"
+                  onChange={(e) => {
+                    formik.handleChange(e);
+                    dispatch(getMessageNotice(""));
+                  }}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.password}
+                  status={
+                    formik.touched.password && formik.errors.password
+                      ? "error "
+                      : ""
+                  }
+                />
+                <div className="message-notice">
+                  {formik.touched.password && formik.errors.password ? (
+                    <span className="text-danger">
+                      {formik.errors.password}
+                    </span>
+                  ) : (
+                    <span className="text-danger">{messageNotice}</span>
+                  )}
+                </div>
+              </div>
 
-          <Button
-            type="primary"
-            onClick={formik.handleSubmit}
-            style={{ width: "100%" }}
-            className="mb-3 btn-red ant-btn-custom"
-          >
-            Đăng nhập
-          </Button>
-          <Button
-            className="btn-red ant-btn-custom"
-            type="primary"
-            onClick={handleSignin}
-            style={{ width: "100%" }}
-          >
-            Đăng Ký
-          </Button>
-        </form>
+              <Button
+                type="primary"
+                onClick={formik.handleSubmit}
+                className="mb-3 btn-red ant-btn-custom"
+              >
+                Đăng nhập
+              </Button>
+              <Button
+                className="btn-red ant-btn-custom"
+                type="primary"
+                onClick={handleSignin}
+              >
+                Đăng Ký
+              </Button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   );
