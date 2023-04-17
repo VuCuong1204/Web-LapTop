@@ -70,7 +70,7 @@ export default function Login(props) {
               padding : 0
             }}
           >
-            <div className="web-laptop-logo"></div>
+            <div className="web-laptop-login-logo"></div>
           </Button>
           <div className="web-laptop-loginform">
             <form
