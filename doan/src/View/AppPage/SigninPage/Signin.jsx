@@ -1,4 +1,4 @@
-import { Button, Input } from "antd";
+import { Button, Image, Input } from "antd";
 import { useFormik } from "formik";
 import React from "react";
 import { useHistory } from "react-router-dom";
@@ -66,7 +66,20 @@ export default function Signin() {
       <div className="signin-form">
         <span className="borderLine"></span>
         <div className="web-laptop-signin-content">
-          <div className="web-laptop-signin-logo"></div>
+          <Button
+            type="link"
+            onClick={() => {
+              history.push("/");
+            }}
+            style={{
+              width: 350,
+              height: 150,
+              padding : 0
+            }}
+            //className="web-laptop-signin-logo"
+          >
+            <div className="web-laptop-signin-logo"></div>
+          </Button>
           <form
             onSubmit={formik.handleSubmit}
             className="web-laptop-login-form"

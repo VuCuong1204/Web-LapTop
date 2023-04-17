@@ -60,7 +60,18 @@ export default function Login(props) {
       <div className="login-form">
         <span className="borderLine"></span>
         <div className="web-laptop-login-content">
-          <div className="web-laptop-logo"></div>
+          <Button
+            type="link"
+            onClick={() => {
+              history.push("/");
+            }}
+            style={{
+              width : 300,
+              padding : 0
+            }}
+          >
+            <div className="web-laptop-logo"></div>
+          </Button>
           <div className="web-laptop-loginform">
             <form
               onSubmit={formik.handleSubmit}

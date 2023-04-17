@@ -11,6 +11,7 @@ import "antd/dist/antd.less";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../src/css/global.css";
 import "../src/css/cssantd.css";
+import "../src/css/materialicons.css"
 import 'react-notifications/lib/notifications.css';
 import 'react-calendar/dist/Calendar.css';
 
