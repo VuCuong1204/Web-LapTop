@@ -27,12 +27,12 @@ export default function Header() {
           Thông tin tài khoản
         </Menu.Item>
         <Menu.Item
-          key="changepass"
+          key="bill"
           onClick={() => {
-            history.push("/ChangePassword");
+            history.push("/Bill");
           }}
         >
-          Đổi mật khẩu
+          Đơn
         </Menu.Item>
         <Menu.Item key="logout" onClick={handleClick}>
           Đăng xuất
@@ -97,7 +97,7 @@ export default function Header() {
                             account_circle
                           </span>
                         </div>
-                        <span style={{color: 'white'}}>{userInfo.use_name}</span>
+                        <span style={{ color: 'white' }}>{userInfo.use_name}</span>
                       </Link>
                     </Popover>
                   </li>
