@@ -17,23 +17,40 @@ if(isset($_POST['id'])) {
  $id =$_POST['id'];
 }
 
- $password = "";
-if(isset($_POST['password'])) {
- $password =$_POST['password'];
+ $password_old = "";
+if(isset($_POST['password_old'])) {
+ $password_old =$_POST['password_old'];
+}
+
+ $password_new = "";
+if(isset($_POST['password_new'])) {
+ $password_new =$_POST['password_new'];
 }
 
 
 if($id == ""
-|| $password == ""
+|| $password_old == ""
+|| $password_new == ""
 ){
   getResult(-2,"Vui lòng nhập đủ thông tin");
 }else{
- changePasswordAccount($id,$password,$con);
+   $query = "SELECT id FROM account WHERE password = '$password_old' AND id = '$id' ";
+   $data= mysqli_query($con,$query);
+  
+    if($data){
+     $row = mysqli_fetch_assoc($data);
+     $id = $row['id'];
+     if( is_null($id)){
+      getResult(-4,"Mật khẩu cũ không chính xác");
+   }else{
+      changePasswordAccount($id,$password_new,$con);
+   }
+ }
 }
 
-  function changePasswordAccount($id,$password,$con){
+  function changePasswordAccount($id,$password_new,$con){
 
-  $query= "UPDATE account set password =$password where id =$id";
+  $query= "UPDATE account set password ='$password_new' where id ='$id'";
   $data = mysqli_query($con,$query);
 
   if ($data) {

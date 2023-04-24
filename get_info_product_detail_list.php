@@ -12,7 +12,7 @@ header('Access-Control-Allow-Origin: *');
     }
   }
   
-  	 class product
+     class product
   {
     function product(
       $productId,
@@ -28,7 +28,7 @@ header('Access-Control-Allow-Origin: *');
       $productWebcam,
       $productSystem,
       $productSpecial,
-      $productAccess,
+      $productAccess
       )
     {
       $this -> productId = $productId;
@@ -51,8 +51,8 @@ header('Access-Control-Allow-Origin: *');
   getProductTypeList($con);
 
   function getProductTypeList($con){
-  	$query = "SELECT * FROM product";
-  	$data =  mysqli_query($con,$query);
+    $query = "SELECT * FROM product";
+    $data =  mysqli_query($con,$query);
 
   $arrayProduct = array();
    
@@ -74,10 +74,10 @@ header('Access-Control-Allow-Origin: *');
       $row['productWebcam'],
       $row['productSystem'],
       $row['productSpecial'],
-      $row['productAccess'],
+      $row['productAccess']
     ));
    }
-   getResult(0,"Danh sách product");
+   getResult(0,"Danh sách product",$arrayProduct);
    }else{
    getResult(-1,"Lỗi server");
  }

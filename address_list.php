@@ -14,9 +14,10 @@ header('Access-Control-Allow-Origin: *');
   
      class addressList
   {
-    function addressList($id,$fullname,$phone,$address,$addresstype)
+    function addressList($idAuto,$idAccount,$fullname,$phone,$address,$addresstype)
     {
-      $this -> id = $id;
+      $this -> idAuto = $idAuto;
+      $this -> idAccount = $idAccount;
       $this -> fullname = $fullname;
       $this -> phone = $phone;
       $this -> address = $address;
@@ -24,19 +25,19 @@ header('Access-Control-Allow-Origin: *');
     }
  }
 
-   $id = 1;
-if(isset($_POST['id'])) {
- $id =$_POST['id'];
+   $idAccount = "";
+if(isset($_POST['$idAccount'])) {
+ $idAccount =$_POST['$idAccount'];
 }
 
-if($id == ""){
+if($idAccount == ""){
  getResult(-2,"Vui lòng nhập đủ thông tin");
 }else{
   getAddressList($con);
 }
 
   function getAddressList($con){
-    $query = "SELECT * FROM addressList where id =$id";
+    $query = "SELECT * FROM addressList where $idAccount =$idAccount";
     $data =  mysqli_query($con,$query);
 
   $arrayAddressList = array();
@@ -44,7 +45,7 @@ if($id == ""){
    if ($data) {
 
   while($row = mysqli_fetch_assoc($data)){
-    array_push($arrayAddressList, new addressList($row['id'],$row['fullname'],$row['phone'],$row['address'],$row['addresstype']));
+    array_push($arrayAddressList, new addressList($row['$idAuto'],$row['$idAccount'],$row['fullname'],$row['phone'],$row['address'],$row['addresstype']));
    }
    getResult(0,"Danh sách address",$arrayAddressList);
    }else{

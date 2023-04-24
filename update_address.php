@@ -13,7 +13,7 @@ header('Access-Control-Allow-Origin: *');
     }
   }
 
-      class addressList
+       class addressList
   {
     function addressList($idAuto,$idAccount,$fullname,$phone,$address,$addresstype)
     {
@@ -26,53 +26,41 @@ header('Access-Control-Allow-Origin: *');
     }
  }
 
+
+$idAuto= "";
+if(isset($_POST['idAuto'])) {
+ $idAuto =$_POST['idAuto'];
+}
+
   $idAccount = "";
 if(isset($_POST['idAccount'])) {
  $idAccount =$_POST['idAccount'];
 }
 
- $fullname = "";
-if(isset($_POST['fullname'])) {
- $fullname =$_POST['fullname'];
-}
-
-$phone = "";
-if(isset($_POST['phone'])) {
- $phone =$_POST['phone'];
-}
-
- $address = "";
-if(isset($_POST['address'])) {
- $address =$_POST['address'];
-}
-
-if($idAccount == ""
-|| $fullname == ""
-||$phone = ""
-|| $address = ""
+if($idAuto == ""
+||$idAccount ==""
 ){
-  getResult(-2,"Vui lòng nhập đủ thông tin");
+ getResult(-2,"Vui lòng nhập đủ thông tin");
 }else{
- updateAddressList($idAccount,$fullname,$phone,$address,$con);
+ updateAddressList($idAuto,$idAccount,$con);
 }
 
-function insertaddressList($idAccount,$fullname,$phone,$address,$con)
+function updateAddressList($idAuto,$idAccount,$con)
 {
-  $queryinsert = "INSERT INTO account('idAccount','fullname','phone','address','addressType') VALUES ('$idAccount','$fullname','$phone','$address',1)";
-  $datainsert = mysqli_query($con,$queryinsert);
-   if ($datainsert) {
-      getAddressList($idAccount,$con);
+  $queryUpdate1 = "UPDATE addressList set addresstype = 0 where idAccount ='$idAccount'";
+  $dataupdate1 = mysqli_query($con,$queryUpdate1);
+     if ($dataupdate1) {
+     updateAddress($idAuto,$idAccount,$con);
   }else{
      getResult(-1,"Lỗi server");
   }
 }
 
-function updateAddressList($idAccount,$fullname,$phone,$address,$con)
-{
-  $queryUpdate1 = "UPDATE addressList set addresstype = 0 where idAccount ='$idAccount'";
-  $dataupdate1 = mysqli_query($con,$queryUpdate1);
-     if ($dataupdate1) {
-     insertaddressList($idAccount,$fullname,$phone,$address,$con);
+function updateAddress($idAuto,$idAccount,$con){
+  $queryUpdate2 = "UPDATE addressList set addresstype = 1 where idAuto ='$idAuto'";
+  $dataupdate2 = mysqli_query($con,$queryUpdate2);
+   if ($dataupdate2) {
+      getAddressList($idAccount,$con);
   }else{
      getResult(-1,"Lỗi server");
   }
