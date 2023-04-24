@@ -1,18 +1,22 @@
-import React from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import { Button, Input } from "antd";
-import { useHistory } from "react-router-dom";
+import axios from "axios";
+import { useFormik } from "formik";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import * as Yup from "yup";
 import {
-  LoginApi,
   getMessageNotice,
   getUserInfo,
   stateGlobal,
 } from "../../../Reducer/GlobalReducer/GlobalReducer";
-import axios from "axios";
 import { openNotification } from "../../SupportView/Notification/Notification";
+import { URLAPI } from "../../../Template/systemConfig";
+import { useEffect } from "react";
 export default function Login(props) {
+  useEffect(() => {
+    document.title = "Đăng nhập"
+  })
   const { messageNotice } = useSelector(stateGlobal);
   const dispatch = useDispatch();
   const formik = useFormik({
@@ -31,7 +35,7 @@ export default function Login(props) {
 
       try {
         const response = await axios.post(
-          "https://vuquoccuong.000webhostapp.com/web_laptop/login.php",
+          `${URLAPI}/login.php`,
           data,
           {
             headers: {
@@ -41,12 +45,16 @@ export default function Login(props) {
         );
         if (response.data.code === 0) {
           dispatch(getUserInfo(response.data.data[0]));
+          sessionStorage.setItem(
+            "userInfo",
+            JSON.stringify(response.data.data[0])
+          );
           history.push("/");
           dispatch(openNotification("SUCCESS", "Đăng nhập thành công"));
         } else {
           dispatch(getMessageNotice(response.data.msg));
         }
-      } catch (err) {}
+      } catch (err) { }
     },
   });
 
@@ -66,8 +74,8 @@ export default function Login(props) {
               history.push("/");
             }}
             style={{
-              width : 300,
-              padding : 0
+              width: 300,
+              padding: 0,
             }}
           >
             <div className="web-laptop-login-logo"></div>
@@ -81,7 +89,7 @@ export default function Login(props) {
                 <Input
                   placeholder="Tên đăng nhập"
                   id="username"
-                  className="username ant-input-custom"
+                  className={formik.touched.username && formik.errors.username ? "username ant-input-custom error" : "username ant-input-custom"}
                   onChange={(e) => {
                     formik.handleChange(e);
                     dispatch(getMessageNotice(""));
@@ -101,7 +109,7 @@ export default function Login(props) {
                 <Input.Password
                   placeholder="Mật khẩu"
                   id="password"
-                  className="password ant-input-password-custom"
+                  className={formik.touched.password && formik.errors.password ? "password ant-input-password-custom error" : "password password ant-input-password-custom"}
                   onChange={(e) => {
                     formik.handleChange(e);
                     dispatch(getMessageNotice(""));
@@ -127,14 +135,16 @@ export default function Login(props) {
 
               <Button
                 type="primary"
+                danger
                 onClick={formik.handleSubmit}
-                className="mb-3 btn-red ant-btn-custom"
+                className="mb-3 ant-btn-custom"
               >
                 Đăng nhập
               </Button>
               <Button
-                className="btn-red ant-btn-custom"
+                className="ant-btn-custom"
                 type="primary"
+                danger
                 onClick={handleSignin}
               >
                 Đăng Ký

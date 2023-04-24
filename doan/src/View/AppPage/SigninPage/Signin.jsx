@@ -11,7 +11,12 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { openNotification } from "../../SupportView/Notification/Notification";
+import { URLAPI } from "../../../Template/systemConfig";
+import { useEffect } from "react";
 export default function Signin() {
+  useEffect(() => {
+    document.title = "Đăng ký"
+  })
   let history = useHistory();
   const dispatch = useDispatch();
   const { messageNoticeSignin } = useSelector(stateGlobal);
@@ -40,7 +45,7 @@ export default function Signin() {
       formData.append("password", values.password);
       try {
         const response = await axios.post(
-          "https://vuquoccuong.000webhostapp.com/web_laptop/register.php",
+          `${URLAPI}register.php`,
           formData,
           {
             headers: {
@@ -50,6 +55,10 @@ export default function Signin() {
         );
         if (response.data.code === 0) {
           dispatch(getUserInfo(response.data.data[0]));
+          sessionStorage.setItem(
+            "userInfo",
+            JSON.stringify(response.data.data[0])
+          );
           history.push("/");
           dispatch(openNotification("SUCCESS", "Đăng ký thành công"));
         } else {
@@ -74,9 +83,9 @@ export default function Signin() {
             style={{
               width: 350,
               height: 150,
-              padding : 0
+              padding: 0,
             }}
-            //className="web-laptop-signin-logo"
+          //className="web-laptop-signin-logo"
           >
             <div className="web-laptop-signin-logo"></div>
           </Button>
@@ -88,7 +97,7 @@ export default function Signin() {
               <Input
                 placeholder="Tên đăng nhập"
                 id="username"
-                className="username ant-input-signin-custom"
+                className={formik.touched.username && formik.errors.username ? "username ant-input-signin-custom error" : "username ant-input-signin-custom" }
                 onChange={(e) => {
                   formik.handleChange(e);
                   dispatch(getMessageNoticeSignin(""));
@@ -106,18 +115,13 @@ export default function Signin() {
               <Input.Password
                 placeholder="Mật khẩu"
                 id="password"
-                className="password ant-input-password-signin-custom"
+                className={formik.touched.password && formik.errors.password ? "password ant-input-password-signin-custom error" : "password ant-input-password-signin-custom" }
                 onChange={(e) => {
                   formik.handleChange(e);
                   dispatch(getMessageNoticeSignin(""));
                 }}
                 onBlur={formik.handleBlur}
                 value={formik.values.password}
-                status={
-                  formik.touched.password && formik.errors.password
-                    ? "error "
-                    : ""
-                }
               />
               <div className="message-notice">
                 {formik.touched.password && formik.errors.password ? (
@@ -130,7 +134,7 @@ export default function Signin() {
               <Input.Password
                 placeholder="Xác nhận mật khẩu"
                 id="confirmpassword"
-                className="confirmpassword ant-input-password-signin-custom"
+                className={formik.touched.confirmpassword && formik.errors.confirmpassword ? "confirmpassword ant-input-password-signin-custom error" : "confirmpassword ant-input-password-signin-custom" }
                 onChange={(e) => {
                   formik.handleChange(e);
                   dispatch(getMessageNoticeSignin(""));
@@ -139,14 +143,14 @@ export default function Signin() {
                 value={formik.values.confirmpassword}
                 status={
                   formik.touched.confirmpassword &&
-                  formik.errors.confirmpassword
+                    formik.errors.confirmpassword
                     ? "error "
                     : ""
                 }
               />
               <div className="message-notice">
                 {formik.touched.confirmpassword &&
-                formik.errors.confirmpassword ? (
+                  formik.errors.confirmpassword ? (
                   <span className="text-danger">
                     {formik.errors.confirmpassword}
                   </span>
@@ -158,14 +162,16 @@ export default function Signin() {
             <Button
               type="primary"
               onClick={formik.handleSubmit}
-              className="mb-3 btn-red ant-btn-signin-custom"
+              danger
+              className="mb-3 ant-btn-signin-custom"
             >
               Đăng Ký
             </Button>
             <Button
               type="primary"
+              danger
               onClick={handleSignin}
-              className="btn-red ant-btn-signin-custom"
+              className="ant-btn-signin-custom"
             >
               Đăng Nhập
             </Button>

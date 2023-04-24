@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { useHistory } from "react-router-dom";
-import { globalservice } from "../../Service/GlobalService.js/GlobalService";
 
 export const globalSlice = createSlice({
   name: "global",
   initialState: {
-    userInfo: {},
+    userInfo: sessionStorage.getItem("userInfo")
+      ? JSON.parse(sessionStorage.getItem("userInfo"))
+      : {},
     messageNotice: "",
-    messageNoticeSignin : "",
+    messageNoticeSignin: "",
   },
   reducers: {
     getUserInfo: (state, action) => {
@@ -17,15 +17,17 @@ export const globalSlice = createSlice({
     getMessageNotice: (state, action) => {
       state.messageNotice = action.payload;
     },
-    getMessageNoticeSignin :(state,action) => {
+    getMessageNoticeSignin: (state, action) => {
       state.messageNoticeSignin = action.payload;
     },
     logout: (state, action) => {
       state.userInfo = {};
+      sessionStorage.removeItem("userInfo")
     },
   },
 });
 
-export const { getUserInfo, getMessageNotice, logout ,getMessageNoticeSignin} = globalSlice.actions;
+export const { getUserInfo, getMessageNotice, logout, getMessageNoticeSignin } =
+  globalSlice.actions;
 export const stateGlobal = (state) => state.global;
 export default globalSlice.reducer;

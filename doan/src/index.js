@@ -14,6 +14,10 @@ import "../src/css/cssantd.css";
 import "../src/css/materialicons.css"
 import 'react-notifications/lib/notifications.css';
 import 'react-calendar/dist/Calendar.css';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 
 //import 'bootstrap/dist/css/bootstrap.css';
 

@@ -1,118 +1,43 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
-import {
-  logout,
-  stateGlobal,
-} from "../../../Reducer/GlobalReducer/GlobalReducer";
-import _ from "lodash";
-import { Button, Input, Menu, Popover } from "antd";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { getListProductTypeAction, stateHome } from '../../../Reducer/HomeReducer/HomeReducer'
+import Header from '../../Header/Header'
+import { Link } from 'react-router-dom'
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 
-export default function HomePage() {
-  const { userInfo } = useSelector(stateGlobal);
-  const dispatch = useDispatch();
-  let history = useHistory();
-
-  function handleClick() {
-    dispatch(logout());
-  }
-  const { Search } = Input;
-  const menuProps = (
-    <div>
-      <Menu>
-        <Menu.Item key="profile" onClick={handleClick}>
-          Thông tin tài khoản
-        </Menu.Item>
-        <Menu.Item key="changepass" onClick={handleClick}>
-          Đổi mật khẩu
-        </Menu.Item>
-        <Menu.Item key="logout" onClick={handleClick}>
-          Đăng xuất
-        </Menu.Item>
-      </Menu>
-    </div>
-  );
+export default function HomePage(props) {
+  useEffect(() => {
+    document.title = "Trang chủ"
+  })
+  const { listProductType } = useSelector(stateHome);
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getListProductTypeAction())
+  }, [])
 
   return (
-    <div>
-      <div className="web-laptop-header">
-        <div className="web-laptop-top">
-          <div className="web-laptop-nav">
-            <nav>
-              <Button
-                type="link"
-                onClick={() => {
-                  history.push("/");
-                }}
-                style={{
-                  width: 100,
-                  padding: 0,
-                  float: "left",
-                  marginRight: 30,
-                }}
-              >
-                <div className="web-laptop-logo-home"></div>
-              </Button>
+    <>
+      <Header />
+      <div className="homepage">
+        <div className="container">
+          <div className="d-flex mt-2">
+            <div className="home-container-slide-product-type">
+              <div className="home-container-slide-product-type-image row">
+                {
+                  listProductType.map((item) => (
+                    <div className="col logo-product" style={{ height: "100%" }}>
+                      <Link to={`/Login/${item.productTypeId}`} style={{ width: "100%", height: "100%" }}>
+                        <img src={`${item.productTypeImage}`} alt={`${item.manufacturer}`} className="image-product" />
+                      </Link>
+                    </div>
 
-              <ul className="web-laptop-choose">
-                <li></li>
-                <li></li>
-                {_.isEmpty(userInfo) ? (
-                  <>
-                    <li>
-                      <Link to="/Login">
-                        <div>
-                          <span class="material-icons md-light">
-                            account_circle
-                          </span>
-                        </div>
-                        <span className="text-white">Đăng nhập</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/Signin">
-                        <div>
-                          <span class="material-icons md-light">
-                            account_circle
-                          </span>
-                        </div>
-                        <span className="text-white">Đăng ký</span>
-                      </Link>
-                    </li>
-                  </>
-                ) : (
-                  <li>
-                    <Popover content={menuProps}>
-                      <Link to="/">
-                        <div>
-                          <span class="material-icons md-light">
-                            account_circle
-                          </span>
-                        </div>
-                        <span>{userInfo.use_name}</span>
-                      </Link>
-                    </Popover>
-                  </li>
-                )}
-              </ul>
-              <div className="web-laptop-search">
-                <form>
-                  <Search
-                    placeholder="Tìm kiếm"
-                    allowClear
-                    //onSearch={}
-                    style={{
-                      width: 500,
-                      height: 40,
-                    }}
-                  />
-                </form>
+                  ))}
               </div>
-            </nav>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    </>
+  )
 }
