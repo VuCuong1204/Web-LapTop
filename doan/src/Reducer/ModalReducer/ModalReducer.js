@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const modalSlice = createSlice({
-    name: "modal",
+export const popUpSlice = createSlice({
+    name: "popup",
     initialState: {
         visiable: false,
         ModalComponent: <></>,
@@ -9,9 +9,10 @@ export const modalSlice = createSlice({
     },
     reducers: {
         openModalAction: (state, action) => {
-            state.visiable = true
-            state.ModalComponent = action.payload.ModalComponent
-            state.title = action.payload.title
+            console.log(action.payload)
+            // state.visiable = true
+            state.ModalComponent = action.payload
+            // state.title = action.payload.title
         }
         ,
         closeModalAction: (state, action) => {
@@ -21,3 +22,7 @@ export const modalSlice = createSlice({
         }
     },
 });
+
+export const { openModalAction, closeModalAction } = popUpSlice.actions;
+export const statePopup = (state) => state.popup;
+export default popUpSlice.reducer;

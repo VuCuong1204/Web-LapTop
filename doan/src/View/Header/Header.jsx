@@ -32,7 +32,7 @@ export default function Header() {
             history.push("/Bill");
           }}
         >
-          Đơn
+          Đơn mua
         </Menu.Item>
         <Menu.Item key="logout" onClick={handleClick}>
           Đăng xuất

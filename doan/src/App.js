@@ -20,6 +20,7 @@ import TemplateProfilePage from "./View/TemplateProfile/TemplateProfilePage";
 import "./index.css";
 import NoConectionPage from "./View/AppPage/NoConection/NoConection";
 import BillPage from "./View/AppPage/BillPage/BillPage";
+import PopUp from "./View/PupUp/Popup";
 
 function App() {
 
@@ -39,6 +40,7 @@ function App() {
   return online ? (
     <Router>
       <NotificationContainer />
+      <PopUp />
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/Login" component={Login} />
