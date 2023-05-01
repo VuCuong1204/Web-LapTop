@@ -1,7 +1,8 @@
-<?php
+<?php 
 
-require"connect.php";
+  require "connect.php";
 header('Access-Control-Allow-Origin: *');
+
 
  class Data
   {
@@ -11,8 +12,8 @@ header('Access-Control-Allow-Origin: *');
       $this -> data =$data;
     }
   }
-  
-     class addressList
+
+       class addressList
   {
     function addressList($idAuto,$idAccount,$fullname,$phone,$address,$addresstype)
     {
@@ -25,18 +26,37 @@ header('Access-Control-Allow-Origin: *');
     }
  }
 
-   $idAccount = "";
+
+$idAuto= "";
+if(isset($_POST['idAuto'])) {
+ $idAuto =$_POST['idAuto'];
+}
+
+  $idAccount = "";
 if(isset($_POST['idAccount'])) {
  $idAccount =$_POST['idAccount'];
 }
 
-if($idAccount == ""){
+if($idAuto == ""
+||$idAccount == ""
+){
  getResult(-2,"Vui lòng nhập đủ thông tin");
 }else{
-  getAddressList($idAccount,$con);
+ updateAddressList($idAuto,$idAccount,$con);
 }
 
-  function getAddressList($idAccount,$con){
+function updateAddressList($idAuto,$idAccount,$con)
+{
+  $queryDelete = "Delete From addressList where idAuto = '$idAuto'";
+  $dataDelete = mysqli_query($con,$queryDelete);
+     if ($dataDelete) {
+    getAddressList($idAccount,$con);
+  }else{
+     getResult(-1,"Lỗi server");
+  }
+}
+
+ function getAddressList($idAccount,$con){
     $query = "SELECT * FROM addressList where idAccount ='$idAccount' order by addresstype DESC";
     $data =  mysqli_query($con,$query);
 
@@ -53,10 +73,9 @@ if($idAccount == ""){
  }
 }
 
-   function getResult($code, $msg,$data =array())
+ function getResult($code, $msg, $data = array())
  {
   $object = new Data($code,$msg,$data);
   echo json_encode($object);
  }
-
 ?>

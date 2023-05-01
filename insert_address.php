@@ -48,8 +48,8 @@ if(isset($_POST['address'])) {
 
 if($idAccount == ""
 || $fullname == ""
-||$phone = ""
-|| $address = ""
+||$phone == ""
+|| $address == ""
 ){
   getResult(-2,"Vui lòng nhập đủ thông tin");
 }else{
@@ -58,12 +58,12 @@ if($idAccount == ""
 
 function insertaddressList($idAccount,$fullname,$phone,$address,$con)
 {
-  $queryinsert = "INSERT INTO account('idAccount','fullname','phone','address','addressType') VALUES ('$idAccount','$fullname','$phone','$address',1)";
+  $queryinsert = "INSERT INTO addressList(idAccount,fullname,phone,address,addresstype) VALUES ('$idAccount','$fullname','$phone','$address',1)";
   $datainsert = mysqli_query($con,$queryinsert);
    if ($datainsert) {
       getAddressList($idAccount,$con);
   }else{
-     getResult(-1,"Lỗi server");
+     getResult(-1,"Lỗi server2");
   }
 }
 
@@ -74,7 +74,7 @@ function updateAddressList($idAccount,$fullname,$phone,$address,$con)
      if ($dataupdate1) {
      insertaddressList($idAccount,$fullname,$phone,$address,$con);
   }else{
-     getResult(-1,"Lỗi server");
+     getResult(-1,"Lỗi server1");
   }
 }
 
@@ -87,11 +87,11 @@ function updateAddressList($idAccount,$fullname,$phone,$address,$con)
    if ($data) {
 
   while($row = mysqli_fetch_assoc($data)){
-    array_push($arrayAddressList, new addressList($row['$idAuto'],$row['$idAccount'],$row['fullname'],$row['phone'],$row['address'],$row['addresstype']));
+    array_push($arrayAddressList, new addressList($row['idAuto'],$row['idAccount'],$row['fullname'],$row['phone'],$row['address'],$row['addresstype']));
    }
    getResult(0,"Danh sách address",$arrayAddressList);
    }else{
-   getResult(-1,"Lỗi server");
+   getResult(-1,"Lỗi server3");
  }
 }
 

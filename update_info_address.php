@@ -1,7 +1,8 @@
-<?php
+<?php 
 
-require"connect.php";
+  require "connect.php";
 header('Access-Control-Allow-Origin: *');
+
 
  class Data
   {
@@ -11,8 +12,8 @@ header('Access-Control-Allow-Origin: *');
       $this -> data =$data;
     }
   }
-  
-     class addressList
+
+       class addressList
   {
     function addressList($idAuto,$idAccount,$fullname,$phone,$address,$addresstype)
     {
@@ -25,19 +26,50 @@ header('Access-Control-Allow-Origin: *');
     }
  }
 
-   $idAccount = "";
-if(isset($_POST['idAccount'])) {
- $idAccount =$_POST['idAccount'];
+
+$idAuto= "";
+if(isset($_POST['idAuto'])) {
+ $idAuto =$_POST['idAuto'];
 }
 
-if($idAccount == ""){
+  $fullname = "";
+if(isset($_POST['fullname'])) {
+ $fullname =$_POST['fullname'];
+}
+
+  $phone = "";
+if(isset($_POST['phone'])) {
+ $phone =$_POST['phone'];
+}
+
+  $address = "";
+if(isset($_POST['address'])) {
+ $address =$_POST['address'];
+}
+
+if($fullname == ""
+||$phone ==""
+||$address ==""
+||$idAuto == ""
+){
  getResult(-2,"Vui lòng nhập đủ thông tin");
 }else{
-  getAddressList($idAccount,$con);
+ updateAddressList($idAuto,$fullname,$phone,$address,$con);
 }
 
-  function getAddressList($idAccount,$con){
-    $query = "SELECT * FROM addressList where idAccount ='$idAccount' order by addresstype DESC";
+function updateAddressList($idAuto,$fullname,$phone,$address,$con)
+{
+  $queryUpdate1 = "UPDATE addressList set fullname = '$fullname',phone = '$phone',address = '$address', where idAuto ='$idAuto'";
+  $dataupdate1 = mysqli_query($con,$queryUpdate1);
+     if ($dataupdate1) {
+     getAddressList($idAuto,$con);
+  }else{
+     getResult(-1,"Lỗi server");
+  }
+}
+
+ function getAddressList($idAuto,$con){
+    $query = "SELECT * FROM addressList where idAuto =$idAuto ";
     $data =  mysqli_query($con,$query);
 
   $arrayAddressList = array();
@@ -53,10 +85,9 @@ if($idAccount == ""){
  }
 }
 
-   function getResult($code, $msg,$data =array())
+ function getResult($code, $msg, $data = array())
  {
   $object = new Data($code,$msg,$data);
   echo json_encode($object);
  }
-
 ?>

@@ -67,7 +67,7 @@ function updateAddress($idAuto,$idAccount,$con){
 }
 
  function getAddressList($idAccount,$con){
-    $query = "SELECT * FROM addressList where idAccount =$idAccount";
+    $query = "SELECT * FROM addressList where idAccount ='$idAccount' order by addresstype DESC";
     $data =  mysqli_query($con,$query);
 
   $arrayAddressList = array();
@@ -75,7 +75,7 @@ function updateAddress($idAuto,$idAccount,$con){
    if ($data) {
 
   while($row = mysqli_fetch_assoc($data)){
-    array_push($arrayAddressList, new addressList($row['$idAuto'],$row['$idAccount'],$row['fullname'],$row['phone'],$row['address'],$row['addresstype']));
+    array_push($arrayAddressList, new addressList($row['idAuto'],$row['idAccount'],$row['fullname'],$row['phone'],$row['address'],$row['addresstype']));
    }
    getResult(0,"Danh sách address",$arrayAddressList);
    }else{

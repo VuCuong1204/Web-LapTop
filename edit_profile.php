@@ -42,7 +42,6 @@ if($id == ""
 || $fullname == ""
 || $email == ""
 || $phone == ""
-|| $address == ""
 ){
   getResult(-2,"Vui lòng nhập đủ thông tin");
 }else{
