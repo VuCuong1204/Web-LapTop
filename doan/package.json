@@ -14,7 +14,7 @@
     "@testing-library/user-event": "^12.5.0",
     "antd": "^4.24.8",
     "axios": "^0.21.1",
-    "bootstrap": "^5.0.0-beta1",
+    "bootstrap": "^4.0.0",
     "buffer": "^6.0.3",
     "chart.js": "^3.2.1",
     "cors": "^2.8.5",

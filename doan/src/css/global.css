@@ -88,6 +88,10 @@ body {
   background-color: #f5f5f5;
 }
 
+.text-white {
+  color: white;
+}
+
 .web-laptop-layout {
   background-image: url("/src/css/Image/background.jpg");
   /* background: #23242a; */
@@ -375,7 +379,7 @@ a {
 }
 
 .web-laptop-profile-content {
-  height: 600px;
+  min-height: 685px;
   width: 1200px;
   position: relative;
   margin: 0 auto;
@@ -396,7 +400,6 @@ a {
 .web-laptop-profile-col2 {
   position: relative;
   flex-grow: 1;
-  width: 980px;
   box-sizing: border-box;
   margin-left: 1.6875rem;
   min-width: 0;
@@ -452,7 +455,7 @@ a {
   flex-direction: column;
   margin-bottom: 4.375rem;
 }
-.container {
+.web-laptop-container {
   margin-right: auto;
   margin-left: auto;
   width: 1200px;
@@ -466,7 +469,6 @@ a {
   flex: 1 1 auto;
   background-color: white;
   border: 1px solid black;
-  max-width: 910px;
 }
 
 .home-container-slide-product-type-image {
@@ -498,6 +500,11 @@ a {
   background: #f4f4f4;
 }
 
+.image-product:hover {
+  transform: translateY(-0.2rem);
+  z-index: 5;
+}
+
 .logo-product {
   position: relative;
 }
@@ -505,3 +512,170 @@ a {
 .logo-product:hover {
   z-index: 1000 !important;
 }
+
+.address-item {
+  padding: 18px 0 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.09);
+  background: #fff;
+}
+
+.address-item-heading {
+  margin-bottom: 4px;
+  justify-content: space-between;
+}
+
+.web-laptop-profile-col2-address-content {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1.5625rem;
+}
+
+.address-item-heading-1 {
+  margin-right: 8px;
+  flex-grow: 1;
+  overflow-x: hidden;
+}
+
+.row-default {
+  margin-top: 4px;
+  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+}
+
+.row-default span {
+  border-radius: 1px;
+  padding: 2px 4px;
+  border: 0.5px solid;
+  margin: 0 4px 4px 0;
+  color: #cd1818;
+  border-color: #cd1818;
+  margin-right: 0;
+  font-size: 13px;
+}
+
+.validate-label {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 14px;
+}
+
+.filter-list-product {
+  width: 100%;
+}
+
+.item-product {
+  min-height: 100px;
+  border-radius: 10px;
+}
+
+.filter-list-product .d-flex .item-product:not(:nth-of-type(5n)) {
+  margin-right: 10px;
+}
+.filter-list-product .d-flex .item-product {
+  margin-bottom: 10px;
+  max-width: none;
+  width: calc(20% - 8px);
+}
+
+.item-product-container {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.1),
+    0 2px 6px 2px rgba(60, 64, 67, 0.15);
+  height: auto;
+  margin-bottom: 10px;
+  min-height: 202px;
+  padding: 10px 10px 35px;
+  position: relative;
+}
+
+.filter-list-product {
+  min-height: 500px;
+}
+
+.d-flex {
+  flex-wrap: wrap !important;
+}
+
+.filter-list-product .d-flex .item-product .product-image {
+  text-align: center;
+}
+
+.filter-list-product .d-flex .item-product .product-image img {
+  margin: 10px 0 0;
+  width: 160px;
+  height: auto;
+  max-width: 100%;
+}
+
+.filter-list-product .d-flex .item-product .product-image img {
+  margin: 10px 0 0;
+  width: 160px;
+  height: auto;
+  max-width: 100%;
+}
+.filter-list-product
+  .d-flex
+  .item-product
+  .link-product
+  .product-profile:hover {
+  transform: translateY(-0.2rem);
+  z-index: 5;
+}
+
+.filter-list-product .d-flex .item-product .product-name {
+  margin-bottom: 5px;
+  color: #444;
+}
+.filter-list-product .d-flex .item-product .product-name h3 {
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  font-size: 14px;
+  font-weight: 600;
+  height: 65px;
+  overflow: hidden;
+  position: relative;
+  z-index: 10;
+}
+
+.web-laptop-footer {
+  min-height: 300px;
+  background-color: #cd1818;
+}
+
+.web-laptop-footer-content {
+  width: 1200px;
+  position: relative;
+  margin: 0 auto;
+}
+
+.web-laptop-footer .web-laptop-footer-content .text-xl-center h1 {
+  font-size: 22px;
+}
+
+.web-laptop-footer-content-name {
+  width: 30%;
+  height: 30px;
+}
+
+.web-laptop-footer-content-id {
+  width: 10%;
+  height: 30px;
+}
+
+.web-laptop-footer-content-class {
+  width: 10%;
+  height: 30px;
+}
+.web-laptop-footer-content-position {
+  width: 20%;
+  height: 30px;
+}
+.web-laptop-footer-content-misson {
+  width: 30%;
+  height: 30px;
+}
+

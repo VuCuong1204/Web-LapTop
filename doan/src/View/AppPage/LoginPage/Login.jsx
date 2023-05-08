@@ -49,8 +49,16 @@ export default function Login(props) {
             "userInfo",
             JSON.stringify(response.data.data[0])
           );
-          history.push("/");
-          dispatch(openNotification("SUCCESS", "Đăng nhập thành công"));
+          if (sessionStorage.getItem("pathName")) {
+            history.push(JSON.parse(sessionStorage.getItem("pathName")));
+            sessionStorage.removeItem("pathName");
+            dispatch(openNotification("SUCCESS", "Đăng nhập thành công"));
+          }
+          else {
+            history.push("/");
+            dispatch(openNotification("SUCCESS", "Đăng nhập thành công"));
+          }
+
         } else {
           dispatch(getMessageNotice(response.data.msg));
         }

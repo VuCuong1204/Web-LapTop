@@ -4,21 +4,20 @@ export const popUpSlice = createSlice({
     name: "popup",
     initialState: {
         visiable: false,
+        title: "",
         ModalComponent: <></>,
-        title: ""
     },
     reducers: {
         openModalAction: (state, action) => {
-            console.log(action.payload)
-            // state.visiable = true
-            state.ModalComponent = action.payload
-            // state.title = action.payload.title
+            state.visiable = true
+            state.title = action.payload.title
+            state.ModalComponent = action.payload.ModalComponent
         }
         ,
-        closeModalAction: (state, action) => {
+        closeModalAction: (state) => {
+            state.title = ""
             state.visiable = false
             state.ModalComponent = <></>
-            state.title = ""
         }
     },
 });

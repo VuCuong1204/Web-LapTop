@@ -59,13 +59,19 @@ export default function Signin() {
             "userInfo",
             JSON.stringify(response.data.data[0])
           );
-          history.push("/");
-          dispatch(openNotification("SUCCESS", "Đăng ký thành công"));
+          if (sessionStorage.getItem("pathName")) {
+            history.push(JSON.parse(sessionStorage.getItem("pathName")));
+            sessionStorage.removeItem("pathName");
+            dispatch(openNotification("SUCCESS", "Đăng ký thành công"));
+          }
+          else {
+            history.push("/");
+            dispatch(openNotification("SUCCESS", "Đăng ký thành công"));
+          }
         } else {
           dispatch(getMessageNoticeSignin(response.data.msg));
         }
       } catch (err) {
-        console.log(err);
       }
     },
   });
@@ -97,7 +103,7 @@ export default function Signin() {
               <Input
                 placeholder="Tên đăng nhập"
                 id="username"
-                className={formik.touched.username && formik.errors.username ? "username ant-input-signin-custom error" : "username ant-input-signin-custom" }
+                className={formik.touched.username && formik.errors.username ? "username ant-input-signin-custom error" : "username ant-input-signin-custom"}
                 onChange={(e) => {
                   formik.handleChange(e);
                   dispatch(getMessageNoticeSignin(""));
@@ -115,7 +121,7 @@ export default function Signin() {
               <Input.Password
                 placeholder="Mật khẩu"
                 id="password"
-                className={formik.touched.password && formik.errors.password ? "password ant-input-password-signin-custom error" : "password ant-input-password-signin-custom" }
+                className={formik.touched.password && formik.errors.password ? "password ant-input-password-signin-custom error" : "password ant-input-password-signin-custom"}
                 onChange={(e) => {
                   formik.handleChange(e);
                   dispatch(getMessageNoticeSignin(""));
@@ -134,7 +140,7 @@ export default function Signin() {
               <Input.Password
                 placeholder="Xác nhận mật khẩu"
                 id="confirmpassword"
-                className={formik.touched.confirmpassword && formik.errors.confirmpassword ? "confirmpassword ant-input-password-signin-custom error" : "confirmpassword ant-input-password-signin-custom" }
+                className={formik.touched.confirmpassword && formik.errors.confirmpassword ? "confirmpassword ant-input-password-signin-custom error" : "confirmpassword ant-input-password-signin-custom"}
                 onChange={(e) => {
                   formik.handleChange(e);
                   dispatch(getMessageNoticeSignin(""));

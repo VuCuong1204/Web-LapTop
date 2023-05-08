@@ -65,11 +65,12 @@ export default function AuthPage(props) {
                 <Button
                   type="primary"
                   onClick={() => {
+                    sessionStorage.setItem("pathName", JSON.stringify(window.location.pathname))
                     history.push("/Login");
                   }}
                   danger
                   style={{
-                    marginLeft : 20,
+                    marginLeft: 20,
                     borderRadius: 8,
                     width: 150,
                     height: 40,

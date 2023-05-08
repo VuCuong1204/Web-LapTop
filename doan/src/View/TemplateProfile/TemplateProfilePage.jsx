@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import { stateGlobal } from "../../Reducer/GlobalReducer/GlobalReducer";
 import AuthPage from "../AppPage/AuthPage/AuthPage";
 import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
 
 export default function TemplateProfilePage(props) {
   const { userInfo } = useSelector(stateGlobal);
@@ -63,6 +64,7 @@ export default function TemplateProfilePage(props) {
               {props.Component}
             </div>
           </div>
+          <Footer />
         </>
       )}
     </>

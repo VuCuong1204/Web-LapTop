@@ -21,6 +21,7 @@ import "./index.css";
 import NoConectionPage from "./View/AppPage/NoConection/NoConection";
 import BillPage from "./View/AppPage/BillPage/BillPage";
 import PopUp from "./View/PupUp/Popup";
+import ProductPage from "./View/AppPage/ProductPage/ProductPage";
 
 function App() {
 
@@ -39,12 +40,12 @@ function App() {
   }, []);
   return online ? (
     <Router>
-      <NotificationContainer />
       <PopUp />
+      <NotificationContainer />
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/Login" component={Login} />
-        <Route exact path="/Login/:id" component={Footer} />
+        <Route exact path="/ProductPage/:id" component={ProductPage} />
         <Route exact path="/Signin" component={Signin} />
         <Route exact path="/NotFound" component={PageNotFound} />
         <Route exact path="/Profile" render={() => {

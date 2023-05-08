@@ -27,7 +27,7 @@ export default function ProfilePage(props) {
         },
         validationSchema: Yup.object().shape({
             fullname: Yup.string().required("Không được để trống").nullable(),
-            email: Yup.string().required("Không được để trống").nullable(),
+            email: Yup.string().required("Không được để trống").nullable().email("Sai định dạng email"),
             phone: Yup.string().required("Không được để trống").nullable().matches(REGEX_PHONE_NUMBER_VN, "Sai định dạng số điện thoại VN"),
         }),
         onSubmit: (values) => {

@@ -42,3 +42,28 @@
   height: 50px;
   width: 350px;
 }
+
+.ant-select.error .ant-select-selector {
+  border: 1px solid #cd1818;
+}
+
+.ant-popover-buttons {
+  text-align: center;
+}
+
+/* .ant-popover-inner {
+  width: 200px;
+  height: 85px;
+} */
+
+.ant-popover-buttons .ant-btn-default {
+  border-radius: 5px;
+  width: 50px;
+}
+
+.ant-popover-buttons .ant-btn-primary {
+  border-radius: 5px;
+  width: 50px;
+  background-color: #ff4d4f;
+  border: 1px solid #ff4d4f;
+}
