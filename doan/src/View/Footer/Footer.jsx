@@ -29,7 +29,7 @@ export default function Footer(props) {
                     </div>
                     <div className="d-flex">
                         <div className="web-laptop-footer-content-name">
-                            <span className="text-white">Vũ Tấn Minh</span>
+                            <a href="https://www.facebook.com/minhvu.147" tarGet="_blank" ><span className="text-white">Vũ Tấn Minh</span></a>
                         </div>
                         <div className="web-laptop-footer-content-id">
                             <span className="text-white">137664</span>
@@ -46,7 +46,7 @@ export default function Footer(props) {
                     </div>
                     <div className="d-flex">
                         <div className="web-laptop-footer-content-name">
-                            <span className="text-white">Vũ Quốc Cường</span>
+                            <a href="https://www.facebook.com/profile.php?id=100017649671970" tarGet="_blank" ><span className="text-white">Vũ Quốc Cường</span></a>
                         </div>
                         <div className="web-laptop-footer-content-id">
                             <span className="text-white">30464</span>
@@ -63,7 +63,7 @@ export default function Footer(props) {
                     </div>
                     <div className="d-flex">
                         <div className="web-laptop-footer-content-name">
-                            <span className="text-white">Nguyễn Tiến Dũng</span>
+                            <a href="https://www.facebook.com/nguyentiendung08022001/" tarGet="_blank" ><span className="text-white">Nguyễn Tiến Dũng</span></a>
                         </div>
                         <div className="web-laptop-footer-content-id">
                             <span className="text-white">35564</span>

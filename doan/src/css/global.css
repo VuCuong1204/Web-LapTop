@@ -80,6 +80,18 @@ summary {
   background: transparent;
 }
 
+a{
+  text-decoration: none;
+}
+
+a::before::after {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration:none;
+}
+
 img {
   vertical-align: middle;
 }
@@ -454,6 +466,7 @@ a {
   display: flex;
   flex-direction: column;
   margin-bottom: 4.375rem;
+  margin-top: 15px
 }
 .web-laptop-container {
   margin-right: auto;
@@ -679,3 +692,76 @@ a {
   height: 30px;
 }
 
+.web-laptop-product-page-image {
+  width: 450px;
+  padding: 15px;
+  flex-shrink: 0;
+}
+
+.web-laptop-container-background {
+  background-color: white;
+}
+
+.display-image-product {
+  width: 100%;
+  padding-top: 100%;
+}
+
+.flex-auto {
+  flex: 1 0 auto;
+  width: 0;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.display-profile-product {
+  width: 100%;
+  padding-top: 40px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.display-profile-product .image-title {
+  font-size : 20px;
+}
+
+.product-method-image label {
+  width : 110px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+._label {
+  width : 150px;
+}
+
+.add-cart-btn{
+  color : #cd1818;
+  border : 1px solid #cd1818
+}
+
+.add-cart-btn:hover{
+  color : #cd1818;
+  border : 1px solid #cd1818
+}
+
+.image-price {
+  font-size :30px;
+  color : #cd1818
+}
+
+.note-box {
+  background-color: #f5f5f5;
+  padding : 10px 10px 10px 0px;
+}
+
+.web-laptop-container .web-laptop-container-background .title {
+  font-size : 30px;
+  font-family: "Times New Roman", Times, serif
+}
+
+.configuration-title {
+  width: 200px;
+}

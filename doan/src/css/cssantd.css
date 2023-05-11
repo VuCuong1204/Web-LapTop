@@ -67,3 +67,10 @@
   background-color: #ff4d4f;
   border: 1px solid #ff4d4f;
 }
+
+.ant-design-button-constom {
+  height : 45px;
+  border-radius: 5px;
+}
+
+

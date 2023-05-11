@@ -4,6 +4,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { logout, stateGlobal } from "../../Reducer/GlobalReducer/GlobalReducer";
+import { LogoutOutlined, Person, ShoppingCartOutlined } from "@mui/icons-material";
 
 
 export default function Header() {
@@ -19,6 +20,7 @@ export default function Header() {
     <div>
       <Menu>
         <Menu.Item
+          icon=<Person />
           key="profile"
           onClick={() => {
             history.push("/Profile");
@@ -27,6 +29,7 @@ export default function Header() {
           Thông tin tài khoản
         </Menu.Item>
         <Menu.Item
+          icon=<ShoppingCartOutlined />
           key="bill"
           onClick={() => {
             history.push("/Bill");
@@ -34,7 +37,10 @@ export default function Header() {
         >
           Đơn mua
         </Menu.Item>
-        <Menu.Item key="logout" onClick={handleClick}>
+        <Menu.Item
+          icon=<LogoutOutlined />
+          key="logout"
+          onClick={handleClick}>
           Đăng xuất
         </Menu.Item>
       </Menu>
@@ -63,8 +69,26 @@ export default function Header() {
               </Button>
 
               <ul className="web-laptop-choose">
-                <li></li>
-                <li></li>
+                <li>
+                  <a href="https://www.facebook.com/minhvu.147" target="blank">
+                    <div>
+                      <span class="material-icons md-light">
+                        info
+                      </span>
+                    </div>
+                    <span className="text-white">Liên hệ</span>
+                  </a>
+                </li>
+                <li>
+                  <Link to="/Cart">
+                    <div>
+                      <span class="material-icons md-light">
+                        shopping_cart
+                      </span>
+                    </div>
+                    <span className="text-white">Giỏ hàng</span>
+                  </Link>
+                </li>
                 {_.isEmpty(userInfo) ? (
                   <>
                     <li>
@@ -91,7 +115,7 @@ export default function Header() {
                 ) : (
                   <li>
                     <Popover content={menuProps}>
-                      <Link to="/">
+                      <Link to="/Profile">
                         <div>
                           <span class="material-icons md-light">
                             account_circle

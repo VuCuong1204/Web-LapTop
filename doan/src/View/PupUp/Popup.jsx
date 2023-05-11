@@ -20,7 +20,6 @@ export default function PopUp(props) {
             cancelButtonProps={{ style: { display: 'none' } }}
             headerStyle={{ className: "pd-5 " }}
             destroyOnClose={true}
-
         >
             {ModalComponent}
         </Modal>

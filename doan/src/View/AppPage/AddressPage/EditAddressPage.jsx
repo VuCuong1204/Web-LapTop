@@ -94,6 +94,7 @@ export default function EditAdressPage(props) {
                 },
             });
         }
+        renderAddress()
     }, [props])
 
 
@@ -169,6 +170,7 @@ export default function EditAdressPage(props) {
             }
             let data = new FormData();
             data.append("idAccount", userInfo.id)
+            data.append("idAuto", props.AddressForEdit.idAuto)
             data.append("fullname", values.fullname)
             data.append("phone", values.phone)
             data.append("address", JSON.stringify(address))

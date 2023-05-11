@@ -33,6 +33,7 @@ export default function AddressPage(props) {
     });
     useEffect(() => {
         let formdata = new URLSearchParams();
+        document.title ="Địa chỉ"
         formdata.append("idAccount", userInfo.id);
         dispatch(getListAddressAction(formdata))
     }, [])
