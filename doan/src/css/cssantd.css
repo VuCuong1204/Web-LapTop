@@ -1,0 +1,76 @@
+.ant-input-custom {
+  border-radius: 6px;
+  width: 300px;
+  height: 50px;
+}
+
+.ant-input.error {
+  border: 1px solid #cd1818;
+}
+
+.ant-input-password.error {
+  border: 1px solid #cd1818;
+}
+
+.ant-input-password-custom {
+  border-radius: 6px;
+  width: 300px;
+  padding: 0px 11px 0px 11px;
+  height: 50px;
+}
+.ant-btn-custom {
+  border-radius: 6px;
+  height: 50px;
+  width: 300px;
+}
+
+.ant-input-signin-custom {
+  border-radius: 6px;
+  width: 350px;
+  height: 50px;
+}
+
+.ant-input-password-signin-custom {
+  border-radius: 6px;
+  width: 350px;
+  padding: 0px 11px 0px 11px;
+  height: 50px;
+}
+
+.ant-btn-signin-custom {
+  border-radius: 6px;
+  height: 50px;
+  width: 350px;
+}
+
+.ant-select.error .ant-select-selector {
+  border: 1px solid #cd1818;
+}
+
+.ant-popover-buttons {
+  text-align: center;
+}
+
+/* .ant-popover-inner {
+  width: 200px;
+  height: 85px;
+} */
+
+.ant-popover-buttons .ant-btn-default {
+  border-radius: 5px;
+  width: 50px;
+}
+
+.ant-popover-buttons .ant-btn-primary {
+  border-radius: 5px;
+  width: 50px;
+  background-color: #ff4d4f;
+  border: 1px solid #ff4d4f;
+}
+
+.ant-design-button-constom {
+  height : 45px;
+  border-radius: 5px;
+}
+
+
