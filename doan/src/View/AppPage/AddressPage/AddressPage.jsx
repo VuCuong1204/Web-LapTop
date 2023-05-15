@@ -12,6 +12,7 @@ import province from "../../../Template/AddressJson/province.json"
 import district from "../../../Template/AddressJson/district.json"
 import ward from "../../../Template/AddressJson/ward.json"
 import { useState } from "react";
+import { setTrueLoadingSpin } from "../../../Reducer/LoadingReducer/LoadingPageReducer";
 
 export default function AddressPage(props) {
     const dispatch = useDispatch();
@@ -59,11 +60,9 @@ export default function AddressPage(props) {
                         return { label: d.name, value: d.id };
                     });
                 if (json.district) {
-                    // Tìm districtName
                     districtName = district.find((item) => {
                         return item.id === json.district;
                     }).name;
-                    // gán list district mới
                     state.ward = ward
                         .filter((item) => {
                             return item.pId === json.district;
@@ -149,8 +148,8 @@ export default function AddressPage(props) {
                                                                 data.append("idAuto", item.idAuto)
                                                                 data.append("idAccount", userInfo.id)
                                                                 dispatch(deleteAddressAction(data));
+                                                                dispatch(setTrueLoadingSpin())
                                                             }}
-                                                            // onCancel={}
                                                             okText="Xóa"
                                                             cancelText="Hủy"
                                                         >
@@ -179,6 +178,7 @@ export default function AddressPage(props) {
                                                             data.append("idAuto", item.idAuto);
                                                             data.append("idAccount", userInfo.id);
                                                             dispatch(editDefaultAddressAction(data))
+                                                            dispatch(setTrueLoadingSpin())
                                                         }} >
                                                         Đặt làm mặc định
                                                     </Button>) : (<></>)

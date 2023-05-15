@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { logout, stateGlobal } from "../../Reducer/GlobalReducer/GlobalReducer";
 import { LogoutOutlined, Person, ShoppingCartOutlined } from "@mui/icons-material";
+import { setDefaultAdress } from "../../Reducer/ProductReducer/ProductReducer";
 
 
 export default function Header() {
@@ -14,6 +15,7 @@ export default function Header() {
 
   function handleClick() {
     dispatch(logout());
+    dispatch(setDefaultAdress())
   }
   const { Search } = Input;
   const menuProps = (
@@ -132,7 +134,6 @@ export default function Header() {
                   <Search
                     placeholder="Tìm kiếm"
                     allowClear
-                    //onSearch={}
                     style={{
                       width: 500,
                       height: 40,

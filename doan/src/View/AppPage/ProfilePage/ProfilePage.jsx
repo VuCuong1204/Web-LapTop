@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import { stateGlobal } from "../../../Reducer/GlobalReducer/GlobalReducer";
+import { setTrueLoadingSpin } from "../../../Reducer/LoadingReducer/LoadingPageReducer";
 import { editProfileAction, setMessageNoticeEditProfile, stateProfile } from "../../../Reducer/ProfileReducer/ProfileReducer";
 import { REGEX_PHONE_NUMBER_VN } from "../../../Template/Regex";
 
@@ -14,7 +15,7 @@ export default function ProfilePage(props) {
         return () => {
             dispatch(setMessageNoticeEditProfile(""));
         }
-    },[])
+    }, [])
     const { userInfo } = useSelector(stateGlobal);
     const { messageNoticeEditProfile } = useSelector(stateProfile);
     const dispatch = useDispatch();
@@ -177,7 +178,10 @@ export default function ProfilePage(props) {
                                     fontSize: 18
                                 }}
                                 danger
-                                onClick={formik.handleSubmit}
+                                onClick={(e) => {
+                                    formik.handleSubmit(e)
+                                    dispatch(setTrueLoadingSpin())
+                                }}
                                 className="col-4 btn-save"
                             >
                                 Lưu</Button>

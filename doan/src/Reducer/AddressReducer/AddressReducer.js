@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { addressservice } from "../../Service/AddressService/AddressService";
 import { openNotification } from "../../View/SupportView/Notification/Notification";
 import { closeModalAction } from "../ModalReducer/ModalReducer";
+import { setFalseLoadingSpin } from "../LoadingReducer/LoadingPageReducer";
 
 export const addressSlice = createSlice({
     name: "address",
@@ -45,15 +46,27 @@ export const editAddressAction = (data) => async (dispatch) => {
 }
 
 export const deleteAddressAction = (data) => async (dispatch) => {
-    const response = await addressservice.deleteAddress(data);
-    dispatch(putListAddressAction(response.data.data))
-    dispatch(openNotification("SUCCESS", "Xóa địa chỉ thành công"))
+    try {
+        const response = await addressservice.deleteAddress(data);
+        dispatch(putListAddressAction(response.data.data))
+        dispatch(setFalseLoadingSpin())
+        dispatch(openNotification("SUCCESS", "Xóa địa chỉ thành công"))
+    }
+    catch (err) {
+        dispatch(setFalseLoadingSpin())
+    }
 }
 
 export const editDefaultAddressAction = (data) => async (dispatch) => {
-    const response = await addressservice.editDefaultAddress(data);
-    dispatch(putListAddressAction(response.data.data))
-    dispatch(openNotification("SUCCESS", "Đổi địa chỉ mặc định thành công"))
+    try {
+        const response = await addressservice.editDefaultAddress(data);
+        dispatch(putListAddressAction(response.data.data))
+        dispatch(setFalseLoadingSpin())
+        dispatch(openNotification("SUCCESS", "Đổi địa chỉ mặc định thành công"))
+    }
+    catch (err) {
+        dispatch(setFalseLoadingSpin())
+    }
 
 }
 

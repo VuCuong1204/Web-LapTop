@@ -47,24 +47,6 @@ export default function AddAddressPage(props) {
             return { label: p.name, value: p.id };
         });
         setState({ ...state });
-
-        // return () => {
-        //     setState({
-        //         ...state,
-        //         province: [],
-        //         district: [],
-        //         ward: [],
-        //         values: {
-        //             province: null,
-        //             district: null,
-        //             ward: null,
-        //             provinceName: null,
-        //             districtName: null,
-        //             wardName: null,
-        //             addressdetail: null,
-        //         }
-        //     });
-        // }
     }, []);
 
     const formik = useFormik({
@@ -109,7 +91,6 @@ export default function AddAddressPage(props) {
             state.values.wardName,
             state.values.addressdetail,
         ];
-        // const array = [];
         const result = array.reduce((prev, current) => {
             return current ? ", " + current + prev : prev;
         }, "");
@@ -403,7 +384,6 @@ export default function AddAddressPage(props) {
                     size="middle"
                     onClick={() => {
                         dispatch(closeModalAction())
-                        // formik.resetForm();
                     }}
                     style={{ borderRadius: "5px" }}
                 >
@@ -415,8 +395,6 @@ export default function AddAddressPage(props) {
                     type="primary"
                     className="size-primary success"
                     size="middle"
-                    // loading={isLoading}
-                    // disabled={isLoading}
                     onClick={() => {
                         formik.handleSubmit();
                     }}

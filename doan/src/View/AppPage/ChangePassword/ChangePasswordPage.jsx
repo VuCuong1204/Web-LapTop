@@ -1,14 +1,14 @@
 import { Button, Input } from "antd";
 import axios from "axios";
 import { useFormik } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import { stateGlobal } from "../../../Reducer/GlobalReducer/GlobalReducer";
+import { setFalseLoadingSpin, setTrueLoadingSpin } from "../../../Reducer/LoadingReducer/LoadingPageReducer";
 import { setMessageNoticeChangePassword, stateProfile } from "../../../Reducer/ProfileReducer/ProfileReducer";
 import { URLAPI } from "../../../Template/systemConfig";
 import { openNotification } from "../../SupportView/Notification/Notification";
-import { useEffect } from "react";
 
 export default function ChangePassWordPage(props) {
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function ChangePassWordPage(props) {
     return () => {
       dispatch(setMessageNoticeChangePassword(""))
     }
-  },[])
+  }, [])
   const { userInfo } = useSelector(stateGlobal)
   const { messageNoticeChangePassword } = useSelector(stateProfile)
   const dispatch = useDispatch()
@@ -52,11 +52,15 @@ export default function ChangePassWordPage(props) {
         if (response.data.code === 0) {
           formik.resetForm();
           dispatch(openNotification("SUCCESS", "Đổi mật khẩu thành công"));
+          dispatch(setFalseLoadingSpin())
         } else {
           dispatch(setMessageNoticeChangePassword(response.data.msg))
           dispatch(openNotification("ERROR", "Đổi mật khẩu thất bại"))
+          dispatch(setFalseLoadingSpin())
         }
-      } catch (err) { }
+      } catch (err) {
+        dispatch(setFalseLoadingSpin())
+      }
     }
   })
 
@@ -166,7 +170,10 @@ export default function ChangePassWordPage(props) {
                 fontSize: 18
               }}
               danger
-              onClick={formik.handleSubmit}
+              onClick={(e) => {
+                formik.handleSubmit(e)
+                dispatch(setTrueLoadingSpin())
+              }}
               className="col-4 btn-save"
             >
               Lưu</Button>

@@ -49,11 +49,9 @@ export default function EditAdressPage(props) {
                         return { label: d.name, value: d.id };
                     });
                 if (json.district) {
-                    // Tìm districtName
                     districtName = district.find((item) => {
                         return item.id === json.district;
                     }).name;
-                    // gán list district mới
                     state.ward = ward
                         .filter((item) => {
                             return item.pId === json.district;
@@ -136,7 +134,6 @@ export default function EditAdressPage(props) {
             state.values.wardName,
             state.values.addressdetail,
         ];
-        // const array = [];
         const result = array.reduce((prev, current) => {
             return current ? ", " + current + prev : prev;
         }, "");
@@ -450,8 +447,6 @@ export default function EditAdressPage(props) {
                     type="primary"
                     className="size-primary success"
                     size="middle"
-                    // loading={isLoading}
-                    // disabled={isLoading}
                     onClick={() => {
                         formik.handleSubmit();
                     }}

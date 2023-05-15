@@ -13,6 +13,7 @@ import {
 import { openNotification } from "../../SupportView/Notification/Notification";
 import { URLAPI } from "../../../Template/systemConfig";
 import { useEffect } from "react";
+import { setTrueLoading } from "../../../Reducer/LoadingReducer/LoadingPageReducer";
 export default function Login(props) {
   useEffect(() => {
     document.title = "Đăng nhập"
@@ -50,11 +51,13 @@ export default function Login(props) {
             JSON.stringify(response.data.data[0])
           );
           if (sessionStorage.getItem("pathName")) {
+            dispatch(setTrueLoading())
             history.push(JSON.parse(sessionStorage.getItem("pathName")));
             sessionStorage.removeItem("pathName");
             dispatch(openNotification("SUCCESS", "Đăng nhập thành công"));
           }
           else {
+            dispatch(setTrueLoading())
             history.push("/");
             dispatch(openNotification("SUCCESS", "Đăng nhập thành công"));
           }

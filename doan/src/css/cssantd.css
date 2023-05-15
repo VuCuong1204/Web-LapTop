@@ -69,8 +69,18 @@
 }
 
 .ant-design-button-constom {
-  height : 45px;
+  height: 45px;
   border-radius: 5px;
 }
 
+.ant-spin-dot-item {
+  background-color: #cd1818;
+}
 
+.hide-arrow .ant-input-number-handler-wrap {
+  display: none;
+}
+
+.hide-arrow .ant-input-number-input {
+  text-align: center;
+}

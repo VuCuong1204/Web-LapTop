@@ -22,6 +22,9 @@ import NoConectionPage from "./View/AppPage/NoConection/NoConection";
 import BillPage from "./View/AppPage/BillPage/BillPage";
 import PopUp from "./View/PupUp/Popup";
 import ProductPage from "./View/AppPage/ProductPage/ProductPage";
+import LoadingPage from "./View/SupportView/LoadingPage/LoadingPage";
+import { useSelector } from "react-redux";
+import { stateLoadingPage } from "./Reducer/LoadingReducer/LoadingPageReducer";
 
 function App() {
 
@@ -35,9 +38,6 @@ function App() {
     })
   }, [])
 
-  useEffect(() => {
-    getData();
-  }, []);
   return online ? (
     <Router>
       <PopUp />

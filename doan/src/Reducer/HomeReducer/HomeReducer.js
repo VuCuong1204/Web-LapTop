@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { homeservice } from "../../Service/HomeService/HomeService";
+import { setFalseLoading } from "../LoadingReducer/LoadingPageReducer";
 
 export const homeSlice = createSlice({
     name: "home",
@@ -18,23 +19,38 @@ export const homeSlice = createSlice({
 });
 
 export const getListProductTypeAction = () => async (dispatch) => {
-    const response = await homeservice.getListProductType()
-    if (response.status === 200) {
-        dispatch(setListProductType(response.data.data))
+    try {
+        const response = await homeservice.getListProductType()
+        if (response.status === 200) {
+            dispatch(setListProductType(response.data.data))
+            dispatch(setFalseLoading())
+        }
+        else {
+            console.log("Error")
+            dispatch(setFalseLoading())
+        }
     }
-    else {
-        console.log("Error")
+    catch (err) {
+        dispatch(setFalseLoading())
     }
 }
 
 export const getListProductAction = () => async (dispatch) => {
-    const response = await homeservice.getListProduct()
-    if (response.status === 200) {
-        dispatch(setListProduct(response.data.data))
+    try {
+        const response = await homeservice.getListProduct()
+        if (response.status === 200) {
+            dispatch(setListProduct(response.data.data))
+            dispatch(setFalseLoading())
+        }
+        else {
+            console.log("Error")
+            dispatch(setFalseLoading())
+        }
     }
-    else {
-        console.log("Error")
+    catch (err) {
+        dispatch(setFalseLoading())
     }
+
 }
 
 export const { setListProductType, setListProduct } = homeSlice.actions

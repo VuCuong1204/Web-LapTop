@@ -13,6 +13,7 @@ import axios from "axios";
 import { openNotification } from "../../SupportView/Notification/Notification";
 import { URLAPI } from "../../../Template/systemConfig";
 import { useEffect } from "react";
+import { setTrueLoading } from "../../../Reducer/LoadingReducer/LoadingPageReducer";
 export default function Signin() {
   useEffect(() => {
     document.title = "Đăng ký"
@@ -45,7 +46,7 @@ export default function Signin() {
       formData.append("password", values.password);
       try {
         const response = await axios.post(
-          `${URLAPI}register.php`,
+          `${URLAPI}/register.php`,
           formData,
           {
             headers: {
@@ -60,11 +61,13 @@ export default function Signin() {
             JSON.stringify(response.data.data[0])
           );
           if (sessionStorage.getItem("pathName")) {
+            dispatch(setTrueLoading())
             history.push(JSON.parse(sessionStorage.getItem("pathName")));
             sessionStorage.removeItem("pathName");
             dispatch(openNotification("SUCCESS", "Đăng ký thành công"));
           }
           else {
+            dispatch(setTrueLoading())
             history.push("/");
             dispatch(openNotification("SUCCESS", "Đăng ký thành công"));
           }
@@ -91,7 +94,6 @@ export default function Signin() {
               height: 150,
               padding: 0,
             }}
-          //className="web-laptop-signin-logo"
           >
             <div className="web-laptop-signin-logo"></div>
           </Button>
