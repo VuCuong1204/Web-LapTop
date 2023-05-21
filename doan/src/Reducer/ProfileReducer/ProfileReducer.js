@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { profileservice } from "../../Service/ProfileService/ProfileService";
 import { openNotification } from "../../View/SupportView/Notification/Notification";
 import { getUserInfo } from "../GlobalReducer/GlobalReducer";
-import { setFalseLoadingSpin } from "../LoadingReducer/LoadingPageReducer";
+import { setFalseLoadingSpin, setTrueLoadingSpin } from "../LoadingReducer/LoadingPageReducer";
 
 export const profileSlice = createSlice({
     name: "profile",
@@ -23,6 +23,7 @@ export const profileSlice = createSlice({
 
 export const editProfileAction = (data) => async (dispatch) => {
     try {
+        dispatch(setTrueLoadingSpin())
         const response = await profileservice.editProfile(data);
         if (response.data.code === 0) {
             dispatch(getUserInfo(response.data.data[0]));
@@ -41,8 +42,6 @@ export const editProfileAction = (data) => async (dispatch) => {
     } catch (error) {
         dispatch(setFalseLoadingSpin())
     }
-
-
 }
 
 export const { setMessageNoticeChangePassword, setMessageNoticeEditProfile } = profileSlice.actions

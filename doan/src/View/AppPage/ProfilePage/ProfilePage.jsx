@@ -180,7 +180,6 @@ export default function ProfilePage(props) {
                                 danger
                                 onClick={(e) => {
                                     formik.handleSubmit(e)
-                                    dispatch(setTrueLoadingSpin())
                                 }}
                                 className="col-4 btn-save"
                             >

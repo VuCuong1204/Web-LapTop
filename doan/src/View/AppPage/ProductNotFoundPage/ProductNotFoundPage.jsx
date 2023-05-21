@@ -7,7 +7,7 @@ import { useEffect } from "react";
 export default function ProductNotFoundPage(props) {
   const history = useHistory();
   useEffect(() => {
-    document.title = "ProductNotFound"
+    document.title = "Thông tin sản phẩm"
   })
   return (
     <>
@@ -47,7 +47,7 @@ export default function ProductNotFoundPage(props) {
               danger
               style={{
                 borderRadius: 8,
-                width : 150,
+                width: 150,
                 height: 40
               }}
             >

@@ -40,6 +40,7 @@ export default function ChangePassWordPage(props) {
       data.append("password_old", values.password);
       data.append("password_new", values.newpassword);
       try {
+        dispatch(setTrueLoadingSpin())
         const response = await axios.post(
           `${URLAPI}/change_password.php`,
           data,
@@ -172,7 +173,6 @@ export default function ChangePassWordPage(props) {
               danger
               onClick={(e) => {
                 formik.handleSubmit(e)
-                dispatch(setTrueLoadingSpin())
               }}
               className="col-4 btn-save"
             >

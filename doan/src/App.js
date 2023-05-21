@@ -20,11 +20,12 @@ import TemplateProfilePage from "./View/TemplateProfile/TemplateProfilePage";
 import "./index.css";
 import NoConectionPage from "./View/AppPage/NoConection/NoConection";
 import BillPage from "./View/AppPage/BillPage/BillPage";
-import PopUp from "./View/PupUp/Popup";
 import ProductPage from "./View/AppPage/ProductPage/ProductPage";
 import LoadingPage from "./View/SupportView/LoadingPage/LoadingPage";
 import { useSelector } from "react-redux";
 import { stateLoadingPage } from "./Reducer/LoadingReducer/LoadingPageReducer";
+import PopUp from "./View/SupportView/PopUp/Popup";
+import CartPage from "./View/AppPage/CartPage/CartPage";
 
 function App() {
 
@@ -53,6 +54,8 @@ function App() {
             Title="Thông tin tài khoản"
             Component=<ProfilePage /> />
         }} />
+
+        <Route excact path="/Cart" component={CartPage} />
 
         <Route exact path="/ChangePassword" render={() => {
           return <TemplateProfilePage

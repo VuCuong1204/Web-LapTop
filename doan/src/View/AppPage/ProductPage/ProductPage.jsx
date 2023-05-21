@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { stateGlobal } from "../../../Reducer/GlobalReducer/GlobalReducer";
 import { setTrueLoading, stateLoadingPage } from "../../../Reducer/LoadingReducer/LoadingPageReducer";
-import { addCommentAction, decreaseCount, deleteCommentAction, getListCommentAction, getProductById, increaseCount, setDefaultAdressAction, setOptionRomRamAction, stateProduct } from "../../../Reducer/ProductReducer/ProductReducer";
+import { addCommentAction, decreaseCount, deleteCommentAction, getListCommentAction, getProduct, getProductById, increaseCount, setDefaultAdressAction, setListOptionRomRamAction, setOptionIdProduct, setOptionRomRamAction, stateProduct } from "../../../Reducer/ProductReducer/ProductReducer";
 import Styled from "../../../css/Styled";
 import Footer from "../../Footer/Footer";
 import Header from "../../Header/Header";
@@ -18,17 +18,21 @@ import district from "../../../Template/AddressJson/district.json"
 import ward from "../../../Template/AddressJson/ward.json"
 import { openModalAction } from "../../../Reducer/ModalReducer/ModalReducer";
 import ChooseAddressPage from "./ChooseAddressPage";
+import { addCartAction } from "../../../Reducer/CartReducer/CartReducer";
+import axios from "axios";
+import { URLAPI } from "../../../Template/systemConfig";
+import { openNotification } from "../../SupportView/Notification/Notification";
 
 export default function ProductPage(props) {
     const dispatch = useDispatch()
-    const { products, optionRomRam, listoptionRomRam, count, listComment, defaultAddress } = useSelector(stateProduct)
+    const { products, optionRomRam, listoptionRomRam, count, listComment, defaultAddress, priceProduct } = useSelector(stateProduct)
     const { userInfo } = useSelector(stateGlobal)
-    const [option, setOption] = useState([]);
-    const [comment, setComment] = useState("");
+    const [option, setOption] = useState("")
+    const [comment, setComment] = useState("")
+    const [notice, setNotice] = useState("")
     useEffect(() => {
         document.title = "Thông tin sản phẩm"
         renderOption();
-        console.log(props)
         return (() => {
             dispatch(setTrueLoading())
         })
@@ -37,13 +41,22 @@ export default function ProductPage(props) {
     const history = useHistory();
 
     function onChange(values) {
+        setNotice('')
         const valuesNew = values.filter((v) => v !== option);
         const value = valuesNew.length ? valuesNew[0] : '';
-        setOption(value);
-        dispatch(setOptionRomRamAction(value))
-        console.log('checked = ', values);
-        console.log(typeof values)
-        console.log(optionRomRam.RAM)
+        setOption(value)
+        dispatch(setOptionIdProduct(value))
+        if (valuesNew.length) {
+            let formData = new FormData();
+            formData.append("productId", props.match.params.id)
+            formData.append("id_edit", value)
+            dispatch(getProduct(formData))
+        }
+        else {
+            let formData = new FormData();
+            formData.append("productId", props.match.params.id)
+            dispatch(getProductById(formData));
+        }
     }
 
     const renderOption = () => {
@@ -51,6 +64,7 @@ export default function ProductPage(props) {
         data.append("productId", props.match.params.id)
         dispatch(getProductById(data));
         dispatch(getListCommentAction(data))
+        dispatch(setListOptionRomRamAction(data))
         let dataAddress = new FormData()
         dataAddress.append("idAccount", userInfo.id)
         dispatch(setDefaultAdressAction(dataAddress))
@@ -130,7 +144,7 @@ export default function ProductPage(props) {
                                                 </div>
                                                 <div className="note-box mt-3">
                                                     <div className="image-price">
-                                                        {parseInt(products.detailList[0].productPrice).toLocaleString('vi-VN')}   VNĐ
+                                                        {parseInt(priceProduct).toLocaleString('vi-VN')}   VNĐ
                                                     </div>
                                                 </div>
                                                 <div className="mt-3">
@@ -157,7 +171,10 @@ export default function ProductPage(props) {
                                                                                         <Button
 
                                                                                             type="link"
-                                                                                            style={{ padding: 0 }}
+                                                                                            style={{
+                                                                                                padding: 0,
+                                                                                                color: "#cd1818"
+                                                                                            }}
                                                                                             onClick={() => {
                                                                                                 dispatch(openModalAction({
                                                                                                     title: "Chọn địa chỉ",
@@ -195,7 +212,7 @@ export default function ProductPage(props) {
                                                             <label>Số lượng</label>
                                                             <div className="d-flex">
                                                                 <Button
-                                                                    disabled={count <= 0 ? true : false}
+                                                                    disabled={count <= 1 ? true : false}
                                                                     onClick={() => {
                                                                         dispatch(decreaseCount())
                                                                     }}
@@ -219,12 +236,15 @@ export default function ProductPage(props) {
                                                                 </Button>
                                                             </div>
                                                         </div>
+                                                        <div className="d-flex product-method-image mt-3" style={{ height: 30 }}>
+                                                            <span className="text-danger">{notice}</span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div>
                                                     { }
                                                 </div>
-                                                <div className="mt-5">
+                                                <div className="mt-3">
                                                     <div className="d-flex">
                                                         <Button
                                                             className="ant-design-button-constom add-cart-btn"
@@ -234,6 +254,18 @@ export default function ProductPage(props) {
                                                                     history.push("/Login");
                                                                 }
                                                                 else {
+                                                                    if (option === '') {
+                                                                        setNotice("Vui lòng chọn ROM-RAM mong muốn")
+                                                                    }
+                                                                    else {
+                                                                        let formdata = new FormData();
+                                                                        formdata.append("accountId", userInfo.id)
+                                                                        formdata.append("id_edit", optionRomRam)
+                                                                        formdata.append("quantity", count)
+                                                                        formdata.append("address", defaultAddress)
+                                                                        formdata.append("price", count * priceProduct)
+                                                                        dispatch(addCartAction(formdata))
+                                                                    }
                                                                 }
                                                             }}
                                                         >
@@ -245,13 +277,42 @@ export default function ProductPage(props) {
                                                             </div>
                                                         </Button>
                                                         <Button
-                                                            onClick={() => {
+                                                            onClick={async () => {
                                                                 if (_.isEmpty(userInfo)) {
                                                                     sessionStorage.setItem("pathName", JSON.stringify(window.location.pathname))
                                                                     history.push("/Login");
                                                                 }
                                                                 else {
-
+                                                                    if (option === '') {
+                                                                        setNotice("Vui lòng chọn ROM-RAM mong muốn")
+                                                                    }
+                                                                    else {
+                                                                        let formdata = new FormData();
+                                                                        formdata.append("accountId", userInfo.id)
+                                                                        formdata.append("id_edit", optionRomRam)
+                                                                        formdata.append("quantity", count)
+                                                                        formdata.append("address", defaultAddress)
+                                                                        formdata.append("price", count * priceProduct)
+                                                                        try {
+                                                                            const response = await axios.post(
+                                                                                `${URLAPI}//cart_add.php`,
+                                                                                formdata,
+                                                                                {
+                                                                                    headers: {
+                                                                                        "Content-Type": "multipart/form-data",
+                                                                                    },
+                                                                                }
+                                                                            );
+                                                                            console.log(response)
+                                                                            if (response.data.code === 0) {
+                                                                                history.push(`/Cart?item=${optionRomRam}`)
+                                                                            } else {
+                                                                                dispatch(openNotification("ERROR", "Vui lòng chọn đầy đủ thông tin"))
+                                                                            }
+                                                                        } catch (err) {
+                                                                            dispatch(openNotification("ERROR", "Đã có lỗi xảy ra vui lòng thêm lại sản phẩm"))
+                                                                        }
+                                                                    }
                                                                 }
                                                             }}
                                                             type="primary"

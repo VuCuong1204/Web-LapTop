@@ -11,9 +11,10 @@ export const productSlice = createSlice({
         productChosse: {},
         optionRomRam: "",
         listoptionRomRam: [],
-        count: 0,
+        count: 1,
         listComment: [],
-        defaultAddress: {}
+        defaultAddress: {},
+        priceProduct: 0,
     },
     reducers: {
         setProductAction: (state, action) => {
@@ -23,7 +24,7 @@ export const productSlice = createSlice({
             state.products = action.payload;
             state.productChosse = action.payload;
         },
-        setOptionRomRamAction: (state, action) => {
+        setOptionIdProduct: (state, action) => {
             state.optionRomRam = action.payload;
         },
         setListOptionRomRam: (state, action) => {
@@ -43,6 +44,9 @@ export const productSlice = createSlice({
         },
         setDefaultAdress: (state, action) => {
             state.defaultAddress = action.payload
+        },
+        setPriceProduct: (state, action) => {
+            state.priceProduct = action.payload
         }
     }
 });
@@ -51,13 +55,28 @@ export const getProductById = (data) => async (dispatch) => {
     try {
         const response = await productservice.getProduct(data);
         dispatch(setProductAction(response.data.data))
+        dispatch(setPriceProduct(response.data.data.detailList[0].productPrice))
+        // const listOption = response.data.data.detailList.map((item) => {
+        //     return {
+        //         label: item.productRam + " - " + item.productRom,
+        //         value: item.id_edit
+        //     }
+        // })
+        // dispatch(setListOptionRomRam(listOption))
+        dispatch(setFalseLoading())
+    }
+    catch (err) {
+        dispatch(setFalseLoading())
+    }
+}
+
+export const setListOptionRomRamAction = (data) => async (dispatch) => {
+    try {
+        const response = await productservice.getProduct(data);
         const listOption = response.data.data.detailList.map((item) => {
             return {
                 label: item.productRam + " - " + item.productRom,
-                value: {
-                    RAM: item.productRam,
-                    ROM: item.productRom
-                }
+                value: item.id_edit
             }
         })
         dispatch(setListOptionRomRam(listOption))
@@ -72,6 +91,7 @@ export const getProduct = (data) => async (dispatch) => {
     try {
         const response = await productservice.getProductDetail(data);
         dispatch(setProductDetailAction(response.data.data))
+        dispatch(setPriceProduct(response.data.data.detailList.productPrice))
         dispatch(setFalseLoading())
     }
     catch (err) {
@@ -106,9 +126,9 @@ export const addCommentAction = (data) => async (dispatch) => {
 
 export const setDefaultAdressAction = (data) => async (dispatch) => {
     const response = await addressservice.getListAddress(data)
-    dispatch(setDefaultAdress(response.data.data[0]))
+    dispatch(setDefaultAdress(response.data.data[0].address))
 }
 
-export const { setProductAction, setProductDetailAction, setOptionRomRamAction, setListOptionRomRam, increaseCount, decreaseCount, setCount, setListComment, setDefaultAdress } = productSlice.actions
+export const { setProductAction, setProductDetailAction, setOptionIdProduct, setListOptionRomRam, increaseCount, decreaseCount, setCount, setListComment, setDefaultAdress, setPriceProduct } = productSlice.actions
 export const stateProduct = (state) => state.product
 export default productSlice.reducer

@@ -10,6 +10,7 @@ import { closeModalAction, openModalAction } from "../../../Reducer/ModalReducer
 import AddAddressPage from "../AddressPage/AddAddressPage";
 import _ from "lodash";
 import { useHistory } from "react-router-dom";
+import { setDefaultAdress } from "../../../Reducer/ProductReducer/ProductReducer";
 
 export default function ChooseAddressPage(props) {
 
@@ -21,7 +22,6 @@ export default function ChooseAddressPage(props) {
         let data = new FormData();
         data.append("idAccount", userInfo.id)
         dispatch(getListAddressAction(data))
-        console.log(listAddress)
     }, [])
     const renderAddress = (data) => {
         try {
@@ -55,7 +55,14 @@ export default function ChooseAddressPage(props) {
         {
             listAddress.length !== 0 ? (
                 listAddress.map((item) => (
-                    <>
+                    <Button
+                        type="link"
+                        className="mt-2 list-address-group"
+                        onClick={() => {
+                            dispatch(setDefaultAdress(item));
+                            dispatch(closeModalAction())
+                        }}
+                    >
                         <div>
                             {item.fullname}
                         </div>
@@ -65,7 +72,7 @@ export default function ChooseAddressPage(props) {
                         <div>
                             {renderAddress(item)}
                         </div>
-                    </>
+                    </Button>
                 ))
             ) :
                 (
@@ -96,9 +103,13 @@ export default function ChooseAddressPage(props) {
                 </>
             ) : (<Button
                 type="link"
+                className="mt-2"
                 style={{
-                    padding: 0,
-                    color: "#cd1818"
+                    paddingLeft: 20,
+                    color: "#cd1818",
+                    border: "1px solid rgba(0,0,0,.20)",
+                    height: 40,
+                    borderRadius: 8
                 }}
                 onClick={() => {
                     dispatch(closeModalAction())

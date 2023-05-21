@@ -747,6 +747,11 @@ a {
   border: 1px solid #cd1818;
 }
 
+.add-cart-btn::before ::after {
+  color: #cd1818;
+  border: 1px solid #cd1818;
+}
+
 .image-price {
   font-size: 30px;
   color: #cd1818;
@@ -776,10 +781,79 @@ a {
   background-color: #fff;
 }
 
-.product-comment .ant-comment .ant-comment-inner .ant-comment-content .ant-comment-content-author .ant-comment-content-author-name {
+.product-comment
+  .ant-comment
+  .ant-comment-inner
+  .ant-comment-content
+  .ant-comment-content-author
+  .ant-comment-content-author-name {
   font-size: 20px;
 }
 
-.product-comment .ant-comment .ant-comment-inner .ant-comment-content .ant-comment-content-detail {
+.product-comment
+  .ant-comment
+  .ant-comment-inner
+  .ant-comment-content
+  .ant-comment-content-detail {
   font-size: 15px;
+}
+
+.list-address-group {
+  height: 100px;
+  width: 100%;
+  text-align: left;
+  color: black;
+  padding: 0;
+  padding-left: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.list-address-group::before {
+  height: 100px;
+  width: 100%;
+  text-align: left;
+  color: black;
+  padding-left: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.09);
+  border-radius: 8px;
+}
+
+.list-address-group:hover {
+  color: #cd1818;
+  border: 1px solid #cd1818;
+}
+
+.homepage .web-laptop-container .cart-product {
+  height: 110px;
+  background-color: #fff;
+  padding: 15px 30px 15px 30px;
+}
+
+.homepage .web-laptop-container .cart-title .col-title-select {
+  width: 5%;
+}
+
+.homepage .web-laptop-container .cart-title .col-title-name {
+  width: 40%;
+}
+
+.homepage .web-laptop-container .cart-title .col-title-price-product {
+  width: 13.75%;
+  text-align: center;
+}
+
+.homepage .web-laptop-container .cart-title .col-title-quantity {
+  width: 13.75%;
+  text-align: center;
+}
+
+.homepage .web-laptop-container .cart-title .col-title-total-price {
+  width: 13.75%;
+  text-align: center;
+}
+
+.homepage .web-laptop-container .cart-title .col-title-total-price {
+  width: 13.75%;
+  text-align: center;
 }

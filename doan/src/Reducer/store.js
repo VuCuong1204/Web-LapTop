@@ -7,6 +7,7 @@ import { testSlice } from "./TableTestApi/test";
 import { addressSlice } from "./AddressReducer/AddressReducer";
 import { productSlice } from "./ProductReducer/ProductReducer";
 import { loadingSlice } from "./LoadingReducer/LoadingPageReducer";
+import { cartSlice } from "./CartReducer/CartReducer";
 
 const store = configureStore({
   reducer: {
@@ -17,7 +18,8 @@ const store = configureStore({
     home: homeSlice.reducer,
     address: addressSlice.reducer,
     product: productSlice.reducer,
-    loading : loadingSlice.reducer,
+    loading: loadingSlice.reducer,
+    cart: cartSlice.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
