@@ -8,7 +8,10 @@ export const cartSlice = createSlice({
     initialState: {
         listCart: [],
         listOptionCart: [],
-        cartChoose: []
+        cartChoose: [],
+        checkedAll: false,
+        totalQuantity: 0,
+        totalPrice: 0
     },
     reducers: {
         putListCartAction: (state, action) => {
@@ -19,6 +22,15 @@ export const cartSlice = createSlice({
         },
         setCartChoose: (state, action) => {
             state.cartChoose = action.payload
+        },
+        setCheckedAll: (state, action) => {
+            state.checkedAll = action.payload
+        },
+        setTotalQuantity: (state, action) => {
+            state.totalQuantity = action.payload
+        },
+        setTotalPrice: (state, action) => {
+            state.totalPrice = action.payload
         }
     }
 });
@@ -28,16 +40,24 @@ export const getListCartAction = (data, id) => async (dispatch) => {
         dispatch(setTrueLoading())
         const response = await cartservice.getListCart(data)
         dispatch(putListCartAction(response.data.data))
-        const listOptionNew = response.data.data.map((item) => {
-            return item.cartId
-        })
-        const dataSave = response.data.data.filter(item => item.id_edit === id)
-        dispatch(setCartChoose(dataSave))
-        dispatch(putListOptionCartAction(listOptionNew))
+        const newList = response.data.data.filter(i => i.cartSelected === "1")
+        dispatch(setCheckedAll(newList.length === response.data.data.length ? true : false))
+        dispatch(setTotalQuantity(newList.length))
+        if (newList.length > 0) {
+            let a = 0;
+            newList.map(item => {
+                a = parseInt(a) + parseInt(item.totalPrice)
+            })
+            dispatch(setTotalPrice(a))
+        }
+        else {
+            dispatch(setTotalPrice(0))
+        }
         dispatch(setFalseLoading())
     }
     catch (err) {
         dispatch(setFalseLoading())
+        dispatch(openNotification("ERROR", "Đã có lỗi xảy ra,vui lòng thử lại sau"))
     }
 }
 
@@ -45,13 +65,68 @@ export const updateQuantityAction = (data) => async (dispatch) => {
     try {
         const response = await cartservice.updateQuantity(data);
         dispatch(putListCartAction(response.data.data))
-        const listOptionNew = response.data.data.map((item) => {
-            return item.cartId
-        })
-        dispatch(putListOptionCartAction(listOptionNew))
+        const newList = response.data.data.filter(i => i.cartSelected === "1")
+        dispatch(setCheckedAll(newList.length === response.data.data.length ? true : false))
+        dispatch(setTotalQuantity(newList.length))
+        if (newList.length > 0) {
+            let a = 0;
+            newList.map(item => {
+                a = parseInt(a) + parseInt(item.totalPrice)
+            })
+            dispatch(setTotalPrice(a))
+        }
+        else {
+            dispatch(setTotalPrice(0))
+        }
     }
     catch (err) {
-        console.log(err)
+        dispatch(openNotification("ERROR", "Đã có lỗi xảy ra,vui lòng thử lại sau"))
+    }
+}
+
+export const setCheckedAction = (data) => async (dispatch) => {
+    try {
+        const response = await cartservice.setChecked(data);
+        dispatch(putListCartAction(response.data.data))
+        const newList = response.data.data.filter(i => i.cartSelected === "1")
+        dispatch(setCheckedAll(newList.length === response.data.data.length ? true : false))
+        dispatch(setTotalQuantity(newList.length))
+        if (newList.length > 0) {
+            let a = 0;
+            newList.map(item => {
+                a = parseInt(a) + parseInt(item.totalPrice)
+            })
+            dispatch(setTotalPrice(a))
+        }
+        else {
+            dispatch(setTotalPrice(0))
+        }
+    }
+    catch (err) {
+        dispatch(openNotification("ERROR", "Đã có lỗi xảy ra,vui lòng thử lại sau"))
+    }
+}
+
+export const setCheckedAllAction = (data) => async (dispatch) => {
+    try {
+        const response = await cartservice.setCheckedAll(data);
+        dispatch(putListCartAction(response.data.data))
+        const newList = response.data.data.filter(i => i.cartSelected === "1")
+        dispatch(setCheckedAll(newList.length === response.data.data.length ? true : false))
+        dispatch(setTotalQuantity(newList.length))
+        if (newList.length > 0) {
+            let a = 0;
+            newList.map(item => {
+                a = parseInt(a) + parseInt(item.totalPrice)
+            })
+            dispatch(setTotalPrice(a))
+        }
+        else {
+            dispatch(setTotalPrice(0))
+        }
+    }
+    catch (err) {
+        dispatch(openNotification("ERROR", "Đã có lỗi xảy ra,vui lòng thử lại sau"))
     }
 }
 
@@ -60,10 +135,19 @@ export const deleteCartAction = (data) => async (dispatch) => {
         const response = await cartservice.deleteCart(data);
         if (response.data.code === 0) {
             dispatch(putListCartAction(response.data.data))
-            const listOptionNew = response.data.data.map((item) => {
-                return item.cartId
-            })
-            dispatch(putListOptionCartAction(listOptionNew))
+            const newList = response.data.data.filter(i => i.cartSelected === "1")
+            dispatch(setCheckedAll(newList.length === response.data.data.length ? true : false))
+            dispatch(setTotalQuantity(newList.length))
+            if (newList.length > 0) {
+                let a = 0;
+                newList.map(item => {
+                    a = parseInt(a) + parseInt(item.totalPrice)
+                })
+                dispatch(setTotalPrice(a))
+            }
+            else {
+                dispatch(setTotalPrice(0))
+            }
             dispatch(openNotification("SUCCESS", "Bạn đã xóa sản phẩm ra khỏi giỏ hàng thành công"));
         }
         else {
@@ -79,11 +163,21 @@ export const addCartAction = (data) => async (dispatch) => {
     try {
         const response = await cartservice.addCart(data)
         if (response.data.code === 0) {
-            const listOptionNew = response.data.data.map((item) => {
-                return item.cartId
-            })
-            dispatch(putListOptionCartAction(listOptionNew))
-            openNotification("SUCCESS", "Thêm sản phẩm vào giỏ hàng thành công");
+            dispatch(putListCartAction(response.data.data))
+            const newList = response.data.data.filter(i => i.cartSelected === "1")
+            dispatch(setCheckedAll(newList.length === response.data.data.length ? true : false))
+            dispatch(setTotalQuantity(newList.length))
+            if (newList.length > 0) {
+                let a = 0;
+                newList.map(item => {
+                    a = parseInt(a) + parseInt(item.totalPrice)
+                })
+                dispatch(setTotalPrice(a))
+            }
+            else {
+                dispatch(setTotalPrice(0))
+            }
+            dispatch(openNotification("SUCCESS", "Bạn đã xóa sản phẩm ra khỏi giỏ hàng thành công"));
         }
         else {
             dispatch(openNotification("ERROR", "Đã có lỗi xảy ra vui lòng thử lại sau"))
@@ -94,6 +188,6 @@ export const addCartAction = (data) => async (dispatch) => {
     }
 }
 
-export const { putListCartAction, putListOptionCartAction, setCartChoose } = cartSlice.actions
+export const { putListCartAction, putListOptionCartAction, setCartChoose, setCheckedAll, setTotalQuantity, setTotalPrice } = cartSlice.actions
 export const stateCart = (state) => state.cart
 export default cartSlice.reducer

@@ -24,6 +24,14 @@ export class CartService extends baseService {
     updateQuantity = (data) => {
         return this.post("/cart_update_quatity.php", data)
     }
+
+    setChecked = (data) => {
+        return this.post("/cart_selected.php", data)
+    }
+
+    setCheckedAll = (data) => {
+        return this.post("/cart_selected_all.php", data)
+    }
 }
 
 export const cartservice = new CartService()

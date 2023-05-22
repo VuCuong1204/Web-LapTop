@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { stateGlobal } from "../../../Reducer/GlobalReducer/GlobalReducer";
 import { setTrueLoading, stateLoadingPage } from "../../../Reducer/LoadingReducer/LoadingPageReducer";
-import { addCommentAction, decreaseCount, deleteCommentAction, getListCommentAction, getProduct, getProductById, increaseCount, setDefaultAdressAction, setListOptionRomRamAction, setOptionIdProduct, setOptionRomRamAction, stateProduct } from "../../../Reducer/ProductReducer/ProductReducer";
+import { addCommentAction, decreaseCount, deleteCommentAction, getListCommentAction, getProduct, getProductById, increaseCount, setDefaultAdressAction, setListOptionRomRam, setListOptionRomRamAction, setOptionIdProduct, setOptionRomRamAction, stateProduct } from "../../../Reducer/ProductReducer/ProductReducer";
 import Styled from "../../../css/Styled";
 import Footer from "../../Footer/Footer";
 import Header from "../../Header/Header";
@@ -35,6 +35,8 @@ export default function ProductPage(props) {
         renderOption();
         return (() => {
             dispatch(setTrueLoading())
+            dispatch(setListOptionRomRam([]))
+            dispatch(setOptionIdProduct(""))
         })
     }, [])
     const { loading } = useSelector(stateLoadingPage)
@@ -68,6 +70,10 @@ export default function ProductPage(props) {
         let dataAddress = new FormData()
         dataAddress.append("idAccount", userInfo.id)
         dispatch(setDefaultAdressAction(dataAddress))
+    }
+
+    const renderCartChoose = () => {
+
     }
 
     const [state, setState] = useState({
@@ -264,6 +270,7 @@ export default function ProductPage(props) {
                                                                         formdata.append("quantity", count)
                                                                         formdata.append("address", defaultAddress)
                                                                         formdata.append("price", count * priceProduct)
+                                                                        formdata.append("cartSelected", 0)
                                                                         dispatch(addCartAction(formdata))
                                                                     }
                                                                 }
@@ -293,6 +300,7 @@ export default function ProductPage(props) {
                                                                         formdata.append("quantity", count)
                                                                         formdata.append("address", defaultAddress)
                                                                         formdata.append("price", count * priceProduct)
+                                                                        formdata.append("cartSelected", 1)
                                                                         try {
                                                                             const response = await axios.post(
                                                                                 `${URLAPI}//cart_add.php`,
@@ -303,7 +311,6 @@ export default function ProductPage(props) {
                                                                                     },
                                                                                 }
                                                                             );
-                                                                            console.log(response)
                                                                             if (response.data.code === 0) {
                                                                                 history.push(`/Cart?item=${optionRomRam}`)
                                                                             } else {

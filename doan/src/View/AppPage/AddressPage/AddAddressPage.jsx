@@ -30,12 +30,6 @@ export default function AddAddressPage(props) {
         },
     });
 
-    useEffect(() => {
-        console.log("mount")
-        return () => {
-            console.log("unmount")
-        }
-    }, [])
 
     useEffect(() => {
         const sortProvince = _.sortBy(province, [

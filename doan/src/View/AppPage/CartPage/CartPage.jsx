@@ -6,7 +6,7 @@ import AuthPage from "../AuthPage/AuthPage";
 import Header from "../../Header/Header";
 import Footer from "../../Footer/Footer";
 import { Button, Checkbox, Empty, InputNumber, Popconfirm } from "antd";
-import { deleteCartAction, getListCartAction, putListCartAction, putListOptionCartAction, setCartChoose, stateCart, updateQuantityAction } from "../../../Reducer/CartReducer/CartReducer";
+import { deleteCartAction, getListCartAction, putListCartAction, putListOptionCartAction, setCheckedAction, setCheckedAll, setCheckedAllAction, stateCart, updateQuantityAction } from "../../../Reducer/CartReducer/CartReducer";
 import { Link } from "react-router-dom";
 import { setTrueLoading } from "../../../Reducer/LoadingReducer/LoadingPageReducer";
 import { parse } from "date-fns";
@@ -14,42 +14,44 @@ import { parse } from "date-fns";
 export default function CartPage(props) {
 
     const { userInfo } = useSelector(stateGlobal)
-    const { listCart, listOptionCart, cartChoose } = useSelector(stateCart)
+    const { listCart, listOptionCart, cartChoose, checkedAll, totalQuantity, totalPrice } = useSelector(stateCart)
     const dispatch = useDispatch()
-
-    const [quantity, setQuantity] = useState(0)
-    const [totalPrice, setTotalPrice] = useState(0)
-
-    const [checkedAll, setCheckedAll] = useState(false)
-    const [checkedList, setCheckedList] = useState([])
-
-
     useEffect(() => {
+        console.log(props.location.search)
+
         document.title = "Giỏ hàng"
         getListCart();
         return () => {
             dispatch(putListCartAction([]))
             dispatch(setTrueLoading())
             dispatch(putListOptionCartAction([]))
-            dispatch(setCartChoose([]))
         }
     }, [])
 
 
-
-
     const handleCheckedAll = (e) => {
         const checked = e.target.checked;
-        dispatch(setCartChoose(checked ? listCart : []))
-        setCheckedAll(checked);
+        if (checked) {
+            let formdata = new FormData();
+            formdata.append("accountId", userInfo.id)
+            formdata.append("cartSelected", 1)
+            dispatch(setCheckedAllAction(formdata))
+        }
+        else {
+            let formdata = new FormData();
+            formdata.append("accountId", userInfo.id)
+            formdata.append("cartSelected", 0)
+            dispatch(setCheckedAllAction(formdata))
+        }
+        // dispatch(setCheckedAll(checked))
     }
 
     const getListCart = () => {
         let formdata = new FormData();
         const params = new URLSearchParams(props.location.search);
-        const item = params.get('item');
+        const id = params.get('params');
         formdata.append("accountId", userInfo.id)
-        dispatch(getListCartAction(formdata, item))
+        dispatch(getListCartAction(formdata, id))
     }
 
     var a = 0
@@ -108,20 +110,24 @@ export default function CartPage(props) {
                                                             <div className="col-title-select">
                                                                 <Checkbox
                                                                     value={item}
-                                                                    onChange={() => {
-                                                                        const currentIndex = cartChoose.indexOf(item);
-                                                                        const newCheckedList = [...cartChoose];
-
-                                                                        if (currentIndex === -1) {
-                                                                            newCheckedList.push(item);
-                                                                        } else {
-                                                                            newCheckedList.splice(currentIndex, 1);
+                                                                    onChange={(e) => {
+                                                                        const checked = e.target.checked;
+                                                                        if (checked) {
+                                                                            let formdata = new FormData();
+                                                                            formdata.append("accountId", userInfo.id)
+                                                                            formdata.append("cartId", item.cartId)
+                                                                            formdata.append("cartSelected", 1)
+                                                                            dispatch(setCheckedAction(formdata))
                                                                         }
-                                                                        setCheckedList(newCheckedList);
-                                                                        dispatch(setCartChoose(newCheckedList))
-                                                                        setCheckedAll(newCheckedList.length === listCart.length);
+                                                                        else {
+                                                                            let formdata = new FormData();
+                                                                            formdata.append("accountId", userInfo.id)
+                                                                            formdata.append("cartId", item.cartId)
+                                                                            formdata.append("cartSelected", 0)
+                                                                            dispatch(setCheckedAction(formdata))
+                                                                        }
                                                                     }}
-                                                                    checked={cartChoose.includes(item)}
+                                                                    checked={item.cartSelected === "1"}
                                                                 >
                                                                 </Checkbox>
                                                             </div>
@@ -234,17 +240,12 @@ export default function CartPage(props) {
                                                         Chọn tất cả
                                                     </div>
                                                     <div style={{ width: "37%" }}>
-                                                        Tổng thanh toán ({cartChoose.length} sản phẩm ) :
+                                                        Tổng thanh toán ({totalQuantity} sản phẩm ) :
                                                         {
                                                             " "
                                                         }
                                                         {
-                                                            (cartChoose.map(item => {
-                                                                a = parseInt(a) + parseInt(item.totalPrice)
-                                                            }))
-                                                        }
-                                                        {
-                                                            <span style={{ fontSize: 20, color: "#cd1818" }}>{a.toLocaleString('vi-VN')}</span>
+                                                            <span style={{ fontSize: 20, color: "#cd1818" }}>{totalPrice.toLocaleString('vi-VN')}</span>
                                                         }
                                                         {" "}
                                                         VNĐ
