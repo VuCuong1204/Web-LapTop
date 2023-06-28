@@ -26,6 +26,8 @@ import { useSelector } from "react-redux";
 import { stateLoadingPage } from "./Reducer/LoadingReducer/LoadingPageReducer";
 import PopUp from "./View/SupportView/PopUp/Popup";
 import CartPage from "./View/AppPage/CartPage/CartPage";
+import CheckoutPage from "./View/AppPage/CheckoutPage/CheckoutPage";
+import ConfirmCartPage from "./View/AdminPage/ConfirmCartPage";
 
 function App() {
 
@@ -56,6 +58,7 @@ function App() {
         }} />
 
         <Route excact path="/Cart" component={CartPage} />
+        <Route excact path="/CheckOut" component={CheckoutPage} />
 
         <Route exact path="/ChangePassword" render={() => {
           return <TemplateProfilePage
@@ -73,6 +76,12 @@ function App() {
           return <TemplateProfilePage
             Title="Đơn mua"
             Component=<BillPage /> />
+        }} />
+
+        <Route exact path="/ConfirmCart" render={() => {
+          return <TemplateProfilePage
+            Title="Xác nhận đơn hàng"
+            Component=<ConfirmCartPage /> />
         }} />
         <Redirect to="/NotFound" />
       </Switch>

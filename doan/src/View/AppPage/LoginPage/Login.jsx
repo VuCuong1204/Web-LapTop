@@ -14,6 +14,7 @@ import { openNotification } from "../../SupportView/Notification/Notification";
 import { URLAPI } from "../../../Template/systemConfig";
 import { useEffect } from "react";
 import { setTrueLoading } from "../../../Reducer/LoadingReducer/LoadingPageReducer";
+import { selected0 } from "../../../Reducer/CartReducer/CartReducer";
 export default function Login(props) {
   useEffect(() => {
     document.title = "Đăng nhập"
@@ -50,6 +51,10 @@ export default function Login(props) {
             "userInfo",
             JSON.stringify(response.data.data[0])
           );
+          let formdata = new FormData();
+          formdata.append("accountId", response.data.data[0].id);
+          formdata.append("cartSelected", 0);
+          dispatch(selected0(formdata))
           if (sessionStorage.getItem("pathName")) {
             dispatch(setTrueLoading())
             history.push(JSON.parse(sessionStorage.getItem("pathName")));
@@ -61,7 +66,6 @@ export default function Login(props) {
             history.push("/");
             dispatch(openNotification("SUCCESS", "Đăng nhập thành công"));
           }
-
         } else {
           dispatch(getMessageNotice(response.data.msg));
         }

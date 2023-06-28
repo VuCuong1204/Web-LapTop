@@ -8,6 +8,8 @@ import { addressSlice } from "./AddressReducer/AddressReducer";
 import { productSlice } from "./ProductReducer/ProductReducer";
 import { loadingSlice } from "./LoadingReducer/LoadingPageReducer";
 import { cartSlice } from "./CartReducer/CartReducer";
+import { billAdminSlice } from "./BillAdminReducer/BillAdminReducer";
+import { billUserSlice } from "./BillReducer/BillReducer";
 
 const store = configureStore({
   reducer: {
@@ -19,7 +21,9 @@ const store = configureStore({
     address: addressSlice.reducer,
     product: productSlice.reducer,
     loading: loadingSlice.reducer,
-    cart: cartSlice.reducer
+    cart: cartSlice.reducer,
+    billadmin : billAdminSlice.reducer,
+    billuser : billUserSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

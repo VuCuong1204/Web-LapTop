@@ -25,7 +25,7 @@ import { openNotification } from "../../SupportView/Notification/Notification";
 
 export default function ProductPage(props) {
     const dispatch = useDispatch()
-    const { products, optionRomRam, listoptionRomRam, count, listComment, defaultAddress, priceProduct } = useSelector(stateProduct)
+    const { products, optionRomRam, listoptionRomRam, count, listComment, defaultAddress, priceProduct, quantityProduct } = useSelector(stateProduct)
     const { userInfo } = useSelector(stateGlobal)
     const [option, setOption] = useState("")
     const [comment, setComment] = useState("")
@@ -70,10 +70,6 @@ export default function ProductPage(props) {
         let dataAddress = new FormData()
         dataAddress.append("idAccount", userInfo.id)
         dispatch(setDefaultAdressAction(dataAddress))
-    }
-
-    const renderCartChoose = () => {
-
     }
 
     const [state, setState] = useState({
@@ -234,6 +230,7 @@ export default function ProductPage(props) {
                                                                     }}
                                                                 />
                                                                 <Button
+                                                                    disabled={count >= parseInt(quantityProduct) ? true : false}
                                                                     onClick={() => {
                                                                         dispatch(increaseCount())
                                                                     }}
@@ -242,7 +239,13 @@ export default function ProductPage(props) {
                                                                 </Button>
                                                             </div>
                                                         </div>
-                                                        <div className="d-flex product-method-image mt-3" style={{ height: 30 }}>
+                                                        <div className="d-flex product-method-image mt-3">
+                                                            <label>Tồn kho</label>
+                                                            <div className="d-flex">
+                                                                {quantityProduct}
+                                                            </div>
+                                                        </div>
+                                                        <div className="d-flex product-method-image mt-2" style={{ height: 30 }}>
                                                             <span className="text-danger">{notice}</span>
                                                         </div>
                                                     </div>
@@ -250,7 +253,7 @@ export default function ProductPage(props) {
                                                 <div>
                                                     { }
                                                 </div>
-                                                <div className="mt-3">
+                                                <div className="mt-1">
                                                     <div className="d-flex">
                                                         <Button
                                                             className="ant-design-button-constom add-cart-btn"
@@ -268,9 +271,11 @@ export default function ProductPage(props) {
                                                                         formdata.append("accountId", userInfo.id)
                                                                         formdata.append("id_edit", optionRomRam)
                                                                         formdata.append("quantity", count)
-                                                                        formdata.append("address", defaultAddress)
+                                                                        formdata.append("idAuto", defaultAddress.idAuto)
                                                                         formdata.append("price", count * priceProduct)
                                                                         formdata.append("cartSelected", 0)
+                                                                        formdata.append("statusPayment", 0)
+                                                                        formdata.append("dateCart", new Date().toLocaleString())
                                                                         dispatch(addCartAction(formdata))
                                                                     }
                                                                 }
@@ -298,12 +303,14 @@ export default function ProductPage(props) {
                                                                         formdata.append("accountId", userInfo.id)
                                                                         formdata.append("id_edit", optionRomRam)
                                                                         formdata.append("quantity", count)
-                                                                        formdata.append("address", defaultAddress)
+                                                                        formdata.append("idAuto", defaultAddress.idAuto)
                                                                         formdata.append("price", count * priceProduct)
                                                                         formdata.append("cartSelected", 1)
+                                                                        formdata.append("statusPayment", 0)
+                                                                        formdata.append("dateCart", new Date().toLocaleString())
                                                                         try {
                                                                             const response = await axios.post(
-                                                                                `${URLAPI}//cart_add.php`,
+                                                                                `${URLAPI}/cart_add.php`,
                                                                                 formdata,
                                                                                 {
                                                                                     headers: {

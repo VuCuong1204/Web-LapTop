@@ -15,6 +15,7 @@ export const productSlice = createSlice({
         listComment: [],
         defaultAddress: {},
         priceProduct: 0,
+        quantityProduct : 0 ,
     },
     reducers: {
         setProductAction: (state, action) => {
@@ -47,6 +48,9 @@ export const productSlice = createSlice({
         },
         setPriceProduct: (state, action) => {
             state.priceProduct = action.payload
+        },
+        setQuantityProduct : (state,action) => {
+            state.quantityProduct = action.payload
         }
     }
 });
@@ -56,13 +60,7 @@ export const getProductById = (data) => async (dispatch) => {
         const response = await productservice.getProduct(data);
         dispatch(setProductAction(response.data.data))
         dispatch(setPriceProduct(response.data.data.detailList[0].productPrice))
-        // const listOption = response.data.data.detailList.map((item) => {
-        //     return {
-        //         label: item.productRam + " - " + item.productRom,
-        //         value: item.id_edit
-        //     }
-        // })
-        // dispatch(setListOptionRomRam(listOption))
+        dispatch(setQuantityProduct(0));
         dispatch(setFalseLoading())
     }
     catch (err) {
@@ -80,6 +78,7 @@ export const setListOptionRomRamAction = (data) => async (dispatch) => {
             }
         })
         dispatch(setListOptionRomRam(listOption))
+        dispatch(setQuantityProduct(0));
         dispatch(setFalseLoading())
     }
     catch (err) {
@@ -92,6 +91,7 @@ export const getProduct = (data) => async (dispatch) => {
         const response = await productservice.getProductDetail(data);
         dispatch(setProductDetailAction(response.data.data))
         dispatch(setPriceProduct(response.data.data.detailList.productPrice))
+        dispatch(setQuantityProduct(response.data.data.detailList.quantity));
         dispatch(setFalseLoading())
     }
     catch (err) {
@@ -126,9 +126,9 @@ export const addCommentAction = (data) => async (dispatch) => {
 
 export const setDefaultAdressAction = (data) => async (dispatch) => {
     const response = await addressservice.getListAddress(data)
-    dispatch(setDefaultAdress(response.data.data[0].address))
+    dispatch(setDefaultAdress(response.data.data[0]))
 }
 
-export const { setProductAction, setProductDetailAction, setOptionIdProduct, setListOptionRomRam, increaseCount, decreaseCount, setCount, setListComment, setDefaultAdress, setPriceProduct } = productSlice.actions
+export const { setProductAction, setProductDetailAction, setOptionIdProduct, setListOptionRomRam, increaseCount, decreaseCount, setCount, setListComment, setDefaultAdress, setPriceProduct , setQuantityProduct} = productSlice.actions
 export const stateProduct = (state) => state.product
 export default productSlice.reducer

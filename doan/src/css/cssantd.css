@@ -192,3 +192,69 @@
   .ant-checkbox-inner {
   border-color: #cd1818;
 }
+
+.web-laptop-tab .ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list {
+  width: 100%;
+}
+
+.web-laptop-tab
+  .ant-tabs-nav
+  .ant-tabs-nav-wrap
+  .ant-tabs-nav-list
+  .ant-tabs-tab {
+  width: calc(100% / 6);
+}
+
+.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab-active,
+.ant-tabs-card > div > .ant-tabs-nav .ant-tabs-tab-active {
+  color: #cd1818 !important;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #cd1818 !important;
+}
+.web-laptop-tab
+  .ant-tabs-nav
+  .ant-tabs-nav-wrap
+  .ant-tabs-nav-list
+  .ant-tabs-tab
+  .ant-tabs-tab-btn {
+  width: 100%;
+  text-align: center;
+}
+
+.ant-tabs-tab-btn:active,
+.ant-tabs-tab-btn:focus,
+.ant-tabs-tab-remove:active,
+.ant-tabs-tab-remove:focus {
+  color: #cd1818 !important;
+}
+
+.ant-tabs-tab:hover {
+  color: #cd1818 !important;
+}
+
+.web-laptop-tab-confirm-page
+  .ant-tabs-nav
+  .ant-tabs-nav-wrap
+  .ant-tabs-nav-list {
+  width: 100%;
+}
+
+.web-laptop-tab-confirm-page
+  .ant-tabs-nav
+  .ant-tabs-nav-wrap
+  .ant-tabs-nav-list
+  .ant-tabs-tab {
+  width: calc(100% / 3);
+}
+
+.web-laptop-tab-confirm-page
+  .ant-tabs-nav
+  .ant-tabs-nav-wrap
+  .ant-tabs-nav-list
+  .ant-tabs-tab
+  .ant-tabs-tab-btn {
+  width: 100%;
+  text-align: center;
+}

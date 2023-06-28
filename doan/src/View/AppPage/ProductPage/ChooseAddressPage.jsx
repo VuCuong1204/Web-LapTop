@@ -59,7 +59,7 @@ export default function ChooseAddressPage(props) {
                         type="link"
                         className="mt-2 list-address-group"
                         onClick={() => {
-                            dispatch(setDefaultAdress(item));
+                            dispatch(setDefaultAdress(item))
                             dispatch(closeModalAction())
                         }}
                     >

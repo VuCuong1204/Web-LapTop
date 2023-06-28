@@ -11,7 +11,7 @@ import { stateLoadingPage } from "../../Reducer/LoadingReducer/LoadingPageReduce
 
 export default function TemplateProfilePage(props) {
   const { userInfo } = useSelector(stateGlobal);
-  const {loadingSpin} = useSelector(stateLoadingPage);
+  const { loadingSpin } = useSelector(stateLoadingPage);
   const history = useHistory();
   return (
     <>
@@ -19,7 +19,7 @@ export default function TemplateProfilePage(props) {
         <AuthPage />
       ) : (
         <>
-          <Spin spinning={loadingSpin} size="large" style={{marginTop:200}}>
+          <Spin spinning={loadingSpin} size="large" style={{ marginTop: 200 }}>
             <Header />
             <div
               className="d-flex web-laptop-profile-content"
@@ -61,6 +61,18 @@ export default function TemplateProfilePage(props) {
                       <span className="profile-title">Đơn mua</span>
                     </Button>
                   </div>
+                  {
+                    userInfo.position === "1" ? (
+                      <div className="d-flex pt-3">
+                        <Button type="link" onClick={() => {
+                          history.push("/ConfirmCart");
+                        }}
+                        >
+                          <span className="profile-title">Xác nhận đơn hàng</span>
+                        </Button>
+                      </div>
+                    ) : (<></>)
+                  }
                 </div>
               </div>
               <div className="web-laptop-profile-col2">

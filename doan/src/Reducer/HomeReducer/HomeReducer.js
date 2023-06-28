@@ -26,7 +26,6 @@ export const getListProductTypeAction = () => async (dispatch) => {
             dispatch(setFalseLoading())
         }
         else {
-            console.log("Error")
             dispatch(setFalseLoading())
         }
     }
@@ -43,7 +42,6 @@ export const getListProductAction = () => async (dispatch) => {
             dispatch(setFalseLoading())
         }
         else {
-            console.log("Error")
             dispatch(setFalseLoading())
         }
     }

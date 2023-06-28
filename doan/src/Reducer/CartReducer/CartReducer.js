@@ -35,7 +35,7 @@ export const cartSlice = createSlice({
     }
 });
 
-export const getListCartAction = (data, id) => async (dispatch) => {
+export const getListCartAction = (data) => async (dispatch) => {
     try {
         dispatch(setTrueLoading())
         const response = await cartservice.getListCart(data)
@@ -184,6 +184,15 @@ export const addCartAction = (data) => async (dispatch) => {
         }
     }
     catch (err) {
+
+    }
+}
+
+export const selected0 = (data) => async (dispatch) => {
+    try {
+        const response = await cartservice.setCheckedAll(data);
+    }
+    catch(err) {
 
     }
 }

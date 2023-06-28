@@ -21,7 +21,6 @@ export const getData = () => async (dispatch) => {
       dispatch(getTodo(response.data));
     }
   } catch (err) {
-    console.log(err);
   }
 };
 

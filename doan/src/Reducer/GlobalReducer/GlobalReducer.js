@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { selected0 } from "../CartReducer/CartReducer";
 
 export const globalSlice = createSlice({
   name: "global",
@@ -12,7 +13,6 @@ export const globalSlice = createSlice({
   reducers: {
     getUserInfo: (state, action) => {
       state.userInfo = action.payload;
-      console.log(state.userInfo);
     },
     getMessageNotice: (state, action) => {
       state.messageNotice = action.payload;
@@ -22,10 +22,17 @@ export const globalSlice = createSlice({
     },
     logout: (state, action) => {
       state.userInfo = {};
-      sessionStorage.removeItem("userInfo")
+
     },
   },
 });
+
+export const logoutidc = (data) => async (dispatch) => {
+  dispatch(selected0(data))
+  dispatch(logout());
+  sessionStorage.removeItem("userInfo")
+}
+
 
 export const { getUserInfo, getMessageNotice, logout, getMessageNoticeSignin } =
   globalSlice.actions;

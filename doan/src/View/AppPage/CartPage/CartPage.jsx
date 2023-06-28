@@ -7,7 +7,7 @@ import Header from "../../Header/Header";
 import Footer from "../../Footer/Footer";
 import { Button, Checkbox, Empty, InputNumber, Popconfirm } from "antd";
 import { deleteCartAction, getListCartAction, putListCartAction, putListOptionCartAction, setCheckedAction, setCheckedAll, setCheckedAllAction, stateCart, updateQuantityAction } from "../../../Reducer/CartReducer/CartReducer";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { setTrueLoading } from "../../../Reducer/LoadingReducer/LoadingPageReducer";
 import { parse } from "date-fns";
 
@@ -17,7 +17,7 @@ export default function CartPage(props) {
     const { listCart, listOptionCart, cartChoose, checkedAll, totalQuantity, totalPrice } = useSelector(stateCart)
     const dispatch = useDispatch()
     useEffect(() => {
-        console.log(props.location.search)
+
 
         document.title = "Giỏ hàng"
         getListCart();
@@ -28,6 +28,7 @@ export default function CartPage(props) {
         }
     }, [])
 
+    const history = useHistory()
 
     const handleCheckedAll = (e) => {
         const checked = e.target.checked;
@@ -48,13 +49,9 @@ export default function CartPage(props) {
 
     const getListCart = () => {
         let formdata = new FormData();
-        const params = new URLSearchParams(props.location.search);
-        const id = params.get('params');
         formdata.append("accountId", userInfo.id)
-        dispatch(getListCartAction(formdata, id))
+        dispatch(getListCartAction(formdata))
     }
-
-    var a = 0
     return (
         <>
             {
@@ -252,12 +249,16 @@ export default function CartPage(props) {
                                                     </div>
                                                     <div style={{ width: "15%" }} class="d-flex justify-content-end">
                                                         <Button
+                                                            disabled={listCart.filter(i => i.cartSelected === "1").length > 0 ? false : true}
                                                             type="primary"
                                                             danger
                                                             style={{
                                                                 borderRadius: "6px",
                                                                 width: 120,
                                                                 height: 40
+                                                            }}
+                                                            onClick={() => {
+                                                                history.push("/checkout")
                                                             }}
                                                         >Mua Hàng</Button>
                                                     </div>

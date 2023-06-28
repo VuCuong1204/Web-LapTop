@@ -3,9 +3,10 @@ import _ from "lodash";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { logout, stateGlobal } from "../../Reducer/GlobalReducer/GlobalReducer";
-import { LogoutOutlined, Person, ShoppingCartOutlined } from "@mui/icons-material";
+import { logout, logoutidc, stateGlobal } from "../../Reducer/GlobalReducer/GlobalReducer";
+import { ConfirmationNumberOutlined, LogoutOutlined, Person, ShoppingCartOutlined } from "@mui/icons-material";
 import { setDefaultAdress } from "../../Reducer/ProductReducer/ProductReducer";
+import { useEffect } from "react";
 
 
 export default function Header() {
@@ -14,9 +15,16 @@ export default function Header() {
   let history = useHistory();
 
   function handleClick() {
-    dispatch(logout());
+    let data = new FormData();
+    data.append("accountId", userInfo.id);
+    data.append("cartSelected", 0);
+    dispatch(logoutidc(data));
     dispatch(setDefaultAdress())
   }
+
+  useEffect(() => {
+    console.log(userInfo.position === "1")
+  }, [])
   const { Search } = Input;
   const menuProps = (
     <div>
@@ -45,6 +53,17 @@ export default function Header() {
           onClick={handleClick}>
           Đăng xuất
         </Menu.Item>
+
+        {
+          userInfo.position === "1" ? (
+            <Menu.Item
+              icon=<ConfirmationNumberOutlined />
+              key="confirm"
+              onClick={() => { history.push("/ConfirmCart") }}>
+              Xác nhận đơn hàng
+            </Menu.Item>
+          ) : (<></>)
+        }
       </Menu>
     </div>
   );

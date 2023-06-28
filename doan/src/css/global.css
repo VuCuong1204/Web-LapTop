@@ -104,6 +104,10 @@ body {
   color: white;
 }
 
+.text-red {
+  color: #cd1818;
+}
+
 .web-laptop-layout {
   background-image: url("/src/css/Image/background.jpg");
   /* background: #23242a; */
@@ -856,4 +860,23 @@ a {
 .homepage .web-laptop-container .cart-title .col-title-total-price {
   width: 13.75%;
   text-align: center;
+}
+
+.web-laptop-billadminpage {
+  margin : 12px 0;
+  border : 1px solid #f5f5f5;
+  border-radius: 4px;
+  padding-bottom: 20px;
+}
+
+.web-laptop-billadminpage-item {
+  padding : 12px 12px 12px 12px;
+}
+
+.web-laptop-billadminpage-background {
+  background-color: #f5f5f5;
+}
+
+.text-red {
+  color : #cd1818
 }
