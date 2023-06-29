@@ -47,12 +47,6 @@ export default function Header() {
         >
           Đơn mua
         </Menu.Item>
-        <Menu.Item
-          icon=<LogoutOutlined />
-          key="logout"
-          onClick={handleClick}>
-          Đăng xuất
-        </Menu.Item>
 
         {
           userInfo.position === "1" ? (
@@ -64,6 +58,16 @@ export default function Header() {
             </Menu.Item>
           ) : (<></>)
         }
+
+
+        <Menu.Item
+          icon=<LogoutOutlined />
+          key="logout"
+          onClick={handleClick}>
+          Đăng xuất
+        </Menu.Item>
+
+
       </Menu>
     </div>
   );

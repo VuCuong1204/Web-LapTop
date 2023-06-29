@@ -10,6 +10,7 @@ import { loadingSlice } from "./LoadingReducer/LoadingPageReducer";
 import { cartSlice } from "./CartReducer/CartReducer";
 import { billAdminSlice } from "./BillAdminReducer/BillAdminReducer";
 import { billUserSlice } from "./BillReducer/BillReducer";
+import { checkoutSlice } from "./CheckoutReducer/CheckoutReducer";
 
 const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ const store = configureStore({
     cart: cartSlice.reducer,
     billadmin : billAdminSlice.reducer,
     billuser : billUserSlice.reducer,
+    checkout : checkoutSlice.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -40,7 +40,7 @@ export const getListCartAction = (data) => async (dispatch) => {
         dispatch(setTrueLoading())
         const response = await cartservice.getListCart(data)
         dispatch(putListCartAction(response.data.data))
-        const newList = response.data.data.filter(i => i.cartSelected === "1")
+        const newList = response.data.data.filter(i => i.cartSelected === "1" && i.status === "0")
         dispatch(setCheckedAll(newList.length === response.data.data.length ? true : false))
         dispatch(setTotalQuantity(newList.length))
         if (newList.length > 0) {
@@ -65,7 +65,7 @@ export const updateQuantityAction = (data) => async (dispatch) => {
     try {
         const response = await cartservice.updateQuantity(data);
         dispatch(putListCartAction(response.data.data))
-        const newList = response.data.data.filter(i => i.cartSelected === "1")
+        const newList = response.data.data.filter(i => i.cartSelected === "1" && i.status === "0")
         dispatch(setCheckedAll(newList.length === response.data.data.length ? true : false))
         dispatch(setTotalQuantity(newList.length))
         if (newList.length > 0) {
@@ -88,7 +88,7 @@ export const setCheckedAction = (data) => async (dispatch) => {
     try {
         const response = await cartservice.setChecked(data);
         dispatch(putListCartAction(response.data.data))
-        const newList = response.data.data.filter(i => i.cartSelected === "1")
+        const newList = response.data.data.filter(i => i.cartSelected === "1" && i.status === "0")
         dispatch(setCheckedAll(newList.length === response.data.data.length ? true : false))
         dispatch(setTotalQuantity(newList.length))
         if (newList.length > 0) {
@@ -111,7 +111,7 @@ export const setCheckedAllAction = (data) => async (dispatch) => {
     try {
         const response = await cartservice.setCheckedAll(data);
         dispatch(putListCartAction(response.data.data))
-        const newList = response.data.data.filter(i => i.cartSelected === "1")
+        const newList = response.data.data.filter(i => i.cartSelected === "1" && i.status === "0")
         dispatch(setCheckedAll(newList.length === response.data.data.length ? true : false))
         dispatch(setTotalQuantity(newList.length))
         if (newList.length > 0) {
@@ -135,7 +135,7 @@ export const deleteCartAction = (data) => async (dispatch) => {
         const response = await cartservice.deleteCart(data);
         if (response.data.code === 0) {
             dispatch(putListCartAction(response.data.data))
-            const newList = response.data.data.filter(i => i.cartSelected === "1")
+            const newList = response.data.data.filter(i => i.cartSelected === "1" && i.status === "0")
             dispatch(setCheckedAll(newList.length === response.data.data.length ? true : false))
             dispatch(setTotalQuantity(newList.length))
             if (newList.length > 0) {

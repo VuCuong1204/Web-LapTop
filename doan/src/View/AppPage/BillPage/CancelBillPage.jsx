@@ -33,26 +33,25 @@ export default function CancelBillPage(props) {
                         <>
                             <div className="web-laptop-billadminpage">
                                 <div className="web-laptop-billadminpage-item">
-                                    <div className="d-flex align-items-center justify-content-between">
-                                        <div className="d-flex align-items-center">
-                                            <span class="material-icons">
+                                    <div className="d-flex align-items-center justify-content-between" style={{ borderBottom: "1px solid #a0a0a0" }}>
+                                        <div className="d-flex align-items-center" >
+                                            {/* <span class="material-icons">
                                                 person_outline
                                             </span>
                                             {
                                                 item.cartInfo[0].username
-                                            }
+                                            } */}
                                         </div>
                                         <div>
-                                            <div className="text-red">ĐÃ HỦY</div>
-
+                                            <div className="text-red mb-2">ĐÃ HỦY</div>
                                         </div>
                                     </div>
                                 </div>
-                                <div>
+                                <div style={{ padding: "12px 12px 12px 12px" }}>
                                     {
                                         item.cartInfo.map((item1) => (
-                                            <Link to={`/ProductPage/${item1.productId}`} style={{ width: "100%", borderBottom: '1px solid #f5f5f5', paddingBottom: '20px' }} className="d-flex justify-content-between  align-items-center">
-                                                <div className="d-flex mr-2" >
+                                            <Link to={`/ProductPage/${item1.productId}`} style={{ width: "100%", borderBottom: '1px solid #a0a0a0', paddingBottom: '20px' }} className="d-flex justify-content-between  align-items-center">
+                                                <div className="d-flex ml-2" >
                                                     <div style={{
                                                         backgroundImage: `url(${item1.productImage})`,
                                                         backgroundSize: "contain",
@@ -77,7 +76,23 @@ export default function CancelBillPage(props) {
                                     }
                                 </div>
                                 <div className="d-flex align-items-end justify-content-end mt-2 mr-3">
-                                    <p className="text-red " style={{ fontSize: 15 }}>Thành tiền :{parseInt(item.totalPrice).toLocaleString('vi-VN')}   VNĐ</p>
+                                    <p className="text-black " style={{ fontSize: 15 }}>Thành tiền :{parseInt(item.totalPrice).toLocaleString('vi-VN')}   VNĐ</p>
+                                </div>
+                                <div className="d-flex align-items-end justify-content-end mt-2 mr-3">
+                                    {/* <p className="text-red " style={{ fontSize: 15 }}>Thành tiền :{parseInt(item.totalPrice).toLocaleString('vi-VN')}   VNĐ</p> */}
+                                    {item.statusPayment === "0" ? (
+                                        <p className="text-red " style={{ fontSize: 15 }}>Chưa thanh toán</p>
+                                    ) : (
+                                        <p className="text-success " style={{ fontSize: 15 }}>Đã thanh toán</p>
+                                    )}
+                                </div>
+                                <div className="d-flex align-items-end justify-content-end mt-2 mr-3">
+                                    {/* <p className="text-red " style={{ fontSize: 15 }}>Thành tiền :{parseInt(item.totalPrice).toLocaleString('vi-VN')}   VNĐ</p> */}
+                                    {item.statusPayment === "1" && item.status === "0" ? (
+                                        <p className="text-red " style={{ fontSize: 15 }}>Vui lòng liên hệ để nhận lại tiền</p>
+                                    ) : (
+                                        <></>
+                                    )}
                                 </div>
                                 <div className="d-flex align-items-end justify-content-end mt-2">
                                     <Button

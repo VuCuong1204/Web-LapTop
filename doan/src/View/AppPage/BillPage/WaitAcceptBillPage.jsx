@@ -4,6 +4,7 @@ import { getListBillNeedAcceptUser, stateBillUser } from "../../../Reducer/BillR
 import { stateGlobal } from "../../../Reducer/GlobalReducer/GlobalReducer";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Button, Empty } from "antd";
+import { changeStatusBillAdmin } from "../../../Reducer/BillAdminReducer/BillAdminReducer";
 
 export default function WaitAcceptBillPage(props) {
     const dispatch = useDispatch();
@@ -28,26 +29,26 @@ export default function WaitAcceptBillPage(props) {
                         <>
                             <div className="web-laptop-billadminpage">
                                 <div className="web-laptop-billadminpage-item">
-                                    <div className="d-flex align-items-center justify-content-between">
+                                    <div className="d-flex align-items-center justify-content-between" style={{ borderBottom: "1px solid #a0a0a0" }}>
                                         <div className="d-flex align-items-center">
-                                            <span class="material-icons">
+                                            {/* <span class="material-icons">
                                                 person_outline
                                             </span>
                                             {
                                                 item.cartInfo[0].username
-                                            }
+                                            } */}
                                         </div>
                                         <div>
-                                            <div className="text-red">CHỜ XÁC NHẬN</div>
+                                            <div className="text-success mb-2">CHỜ XÁC NHẬN</div>
 
                                         </div>
                                     </div>
                                 </div>
-                                <div>
+                                <div style={{ padding: "12px 12px 12px 12px" }}>
                                     {
                                         item.cartInfo.map((item1) => (
-                                            <Link to={`/ProductPage/${item1.productId}`} style={{ width: "100%", borderBottom: '1px solid #f5f5f5', paddingBottom: '20px' }} className="d-flex justify-content-between  align-items-center">
-                                                <div className="d-flex mr-2" >
+                                            <Link to={`/ProductPage/${item1.productId}`} style={{ width: "100%", borderBottom: '1px solid #a0a0a0', paddingBottom: '20px' }} className="d-flex justify-content-between  align-items-center">
+                                                <div className="d-flex mr-3" >
                                                     <div style={{
                                                         backgroundImage: `url(${item1.productImage})`,
                                                         backgroundSize: "contain",
@@ -72,7 +73,15 @@ export default function WaitAcceptBillPage(props) {
                                     }
                                 </div>
                                 <div className="d-flex align-items-end justify-content-end mt-2 mr-3">
-                                    <p className="text-red " style={{ fontSize: 15 }}>Thành tiền :{parseInt(item.totalPrice).toLocaleString('vi-VN')}   VNĐ</p>
+                                    <p className="text-black " style={{ fontSize: 15 }}>Thành tiền :{parseInt(item.totalPrice).toLocaleString('vi-VN')}   VNĐ</p>
+                                </div>
+                                <div className="d-flex align-items-end justify-content-end mt-2 mr-3">
+                                    {/* <p className="text-red " style={{ fontSize: 15 }}>Thành tiền :{parseInt(item.totalPrice).toLocaleString('vi-VN')}   VNĐ</p> */}
+                                    {item.statusPayment === "0" ? (
+                                        <p className="text-red " style={{ fontSize: 15 }}>Chưa thanh toán</p>
+                                    ) : (
+                                        <p className="text-success " style={{ fontSize: 15 }}>Đã thanh toán</p>
+                                    )}
                                 </div>
                                 <div className="d-flex align-items-end justify-content-end mt-2">
                                     <Button
@@ -80,6 +89,13 @@ export default function WaitAcceptBillPage(props) {
                                         type="primary"
                                         className="mr-3"
                                         style={{ width: 100 }}
+                                        onClick={() => {
+                                            let data = new FormData();
+                                            data.append('accountId', userInfo.id)
+                                            data.append('idBill', item.idBill)
+                                            data.append('status', 2)
+                                            dispatch(changeStatusBillAdmin(data));
+                                        }}
                                     >Hủy đơn</Button>
                                 </div>
                             </div>

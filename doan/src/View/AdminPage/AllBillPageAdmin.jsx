@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getListAllBill, stateBillAdmin } from "../../Reducer/BillAdminReducer/BillAdminReducer";
+import { changeStatusBillAdmin, changeStatusPaymentBillAdmin, completeBillAction, getListAllBill, stateBillAdmin } from "../../Reducer/BillAdminReducer/BillAdminReducer";
 import { Button, Empty } from "antd";
 import { stateGlobal } from "../../Reducer/GlobalReducer/GlobalReducer";
 import axios from "axios";
@@ -31,38 +31,38 @@ export default function AllBillPageAdmin() {
                         <>
                             <div className="web-laptop-billadminpage">
                                 <div className="web-laptop-billadminpage-item">
-                                    <div className="d-flex align-items-center justify-content-between">
+                                    <div className="d-flex align-items-center justify-content-between" style={{ borderBottom: "1px solid #a0a0a0" }}>
                                         <div className="d-flex align-items-center">
-                                            <span class="material-icons">
+                                            {/* <span class="material-icons">
                                                 person_outline
                                             </span>
                                             {
                                                 item.cartInfo[0].username
-                                            }
+                                            } */}
                                         </div>
                                         <div>
                                             {
                                                 item.status === "0" ? (
-                                                    <div className="text-red">ĐÃ HỦY</div>
+                                                    <div className="text-red mb-2">ĐÃ HỦY</div>
                                                 ) : item.status === "1" ? (
-                                                    <div className="text-red">CHỜ XÁC NHẬN</div>
+                                                    <div className="text-success mb-2">CHỜ XÁC NHẬN</div>
                                                 )
                                                     :
                                                     item.status === "2" ? (
-                                                        <div className="text-red">ĐANG GIAO</div>
+                                                        <div className="text-success mb-2">ĐANG GIAO</div>
                                                     )
                                                         : item.status === "3" ? (
-                                                            <div className="text-red">HOÀN THÀNH</div>
+                                                            <div className="text-success mb-2">HOÀN THÀNH</div>
                                                         )
                                                             : (<></>)
                                             }
                                         </div>
                                     </div>
                                 </div>
-                                <div>
+                                <div style={{ padding: "12px 12px 12px 12px" }}>
                                     {
                                         item.cartInfo.map((item1) => (
-                                            <Link to={`/ProductPage/${item1.productId}`} style={{ width: "100%", borderBottom: '1px solid #f5f5f5', paddingBottom: '20px' }} className="d-flex justify-content-between  align-items-center">
+                                            <Link to={`/ProductPage/${item1.productId}`} style={{ width: "100%", borderBottom: '1px solid #a0a0a0', paddingBottom: '20px' }} className="d-flex justify-content-between  align-items-center">
                                                 <div className="d-flex mr-2" >
                                                     <div style={{
                                                         backgroundImage: `url(${item1.productImage})`,
@@ -88,7 +88,23 @@ export default function AllBillPageAdmin() {
                                     }
                                 </div>
                                 <div className="d-flex align-items-end justify-content-end mt-2 mr-3">
-                                    <p className="text-red " style={{ fontSize: 15 }}>Thành tiền :{parseInt(item.totalPrice).toLocaleString('vi-VN')}   VNĐ</p>
+                                    <p className="text-black " style={{ fontSize: 15 }}>Thành tiền :{parseInt(item.totalPrice).toLocaleString('vi-VN')}   VNĐ</p>
+                                </div>
+                                <div className="d-flex align-items-end justify-content-end mt-2 mr-3">
+                                    {/* <p className="text-red " style={{ fontSize: 15 }}>Thành tiền :{parseInt(item.totalPrice).toLocaleString('vi-VN')}   VNĐ</p> */}
+                                    {item.statusPayment === "0" ? (
+                                        <p className="text-red " style={{ fontSize: 15 }}>Chưa thanh toán</p>
+                                    ) : (
+                                        <p className="text-success " style={{ fontSize: 15 }}>Đã thanh toán</p>
+                                    )}
+                                </div>
+                                <div className="d-flex align-items-end justify-content-end mt-2 mr-3">
+                                    {/* <p className="text-red " style={{ fontSize: 15 }}>Thành tiền :{parseInt(item.totalPrice).toLocaleString('vi-VN')}   VNĐ</p> */}
+                                    {item.statusPayment === "1" && item.status === "0" ? (
+                                        <p className="text-red " style={{ fontSize: 15 }}>Vui lòng liên hệ để nhận lại tiền</p>
+                                    ) : (
+                                        <></>
+                                    )}
                                 </div>
                                 {
                                     item.status === "1" ? (
@@ -98,6 +114,13 @@ export default function AllBillPageAdmin() {
                                                 // type="primary"
                                                 className="mr-3"
                                                 style={{ width: 100 }}
+                                                onClick={() => {
+                                                    let data = new FormData();
+                                                    data.append('accountId', item.idAccount)
+                                                    data.append('idBill', item.idBill)
+                                                    data.append('status', 0)
+                                                    dispatch(changeStatusBillAdmin(data));
+                                                }}
                                             >Từ chối</Button>
 
                                             <Button
@@ -105,12 +128,37 @@ export default function AllBillPageAdmin() {
                                                 type="primary"
                                                 className="mr-3"
                                                 style={{ width: 100 }}
+                                                onClick={() => {
+                                                    let data = new FormData();
+                                                    data.append('accountId', item.idAccount)
+                                                    data.append('idBill', item.idBill)
+                                                    data.append('status', 2)
+                                                    dispatch(changeStatusBillAdmin(data));
+                                                }}
                                             >Xác nhận</Button>
                                         </div>
                                     ) :
                                         item.status === "0" ? (
                                             <div className="d-flex align-items-end justify-content-end mt-2">
                                                 <p className="text-red mr-3">Đơn hàng này đã bị hủy</p>
+                                                {
+                                                    item.statusPayment === "1" ? (
+                                                        <Button
+                                                            className="mr-2"
+                                                            type="primary"
+                                                            danger
+                                                            onClick={() => {
+                                                                let data = new FormData();
+                                                                data.append('accountId', item.idAccount)
+                                                                data.append('idBill', item.idBill)
+                                                                data.append('statusPayment', 0)
+                                                                dispatch(changeStatusPaymentBillAdmin(data));
+                                                            }}
+                                                        >
+                                                            Hoàn trả tiền
+                                                        </Button>
+                                                    ) : (<></>)
+                                                }
                                             </div>
                                         )
                                             : item.status === "2" ? (
@@ -121,7 +169,29 @@ export default function AllBillPageAdmin() {
                                                         type="primary"
                                                         className="mr-3"
                                                         style={{ width: 120 }}
+                                                        onClick={() => {
+                                                            let data = new FormData();
+                                                            data.append('accountId', item.idAccount)
+                                                            data.append('idBill', item.idBill)
+                                                            data.append('status', 0)
+                                                            dispatch(changeStatusBillAdmin(data));
+                                                        }}
                                                     >Hủy đơn hàng</Button>
+
+                                                    <Button
+                                                        danger
+                                                        type="primary"
+                                                        className="mr-3"
+                                                        style={{ width: 200 }}
+                                                        onClick={() => {
+                                                            let data = new FormData();
+                                                            data.append('accountId', item.idAccount)
+                                                            data.append('idBill', item.idBill)
+                                                            data.append('status', 3)
+                                                            data.append('statusPayment', 1)
+                                                            dispatch(completeBillAction(data));
+                                                        }}
+                                                    >Hoàn thành đơn hàng</Button>
                                                     {/* <Button
                                                     danger
                                                     type="primary"
@@ -167,7 +237,7 @@ export default function AllBillPageAdmin() {
                                                 </div>
                                             ) : item.status === "3" ? (
                                                 <div className="d-flex align-items-end justify-content-end mt-2">
-                                                    <p className="text-red mr-3">Đơn hàng đã hoàn thành</p>
+                                                    <p className="text-success mr-3">Đơn hàng đã hoàn thành</p>
                                                 </div>
                                             ) : (<></>)
                                 }
