@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getListAllBillUser, stateBillUser } from "../../../Reducer/BillReducer/BillReducer";
+import { changeStatusBillUser, getListAllBillUser, stateBillUser } from "../../../Reducer/BillReducer/BillReducer";
 import { stateGlobal } from "../../../Reducer/GlobalReducer/GlobalReducer";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useEffect } from "react";
@@ -8,6 +8,7 @@ import { Button, Empty } from "antd";
 import axios from "axios";
 import { URLAPI } from "../../../Template/systemConfig";
 import { openNotification } from "../../SupportView/Notification/Notification";
+import { changeStatusBillAdmin } from "../../../Reducer/BillAdminReducer/BillAdminReducer";
 
 export default function AllBillPage(props) {
 
@@ -117,6 +118,13 @@ export default function AllBillPage(props) {
                                                 type="primary"
                                                 className="mr-3"
                                                 style={{ width: 100 }}
+                                                onClick={() => {
+                                                    let data = new FormData();
+                                                    data.append('accountId', userInfo.id)
+                                                    data.append('idBill', item.idBill)
+                                                    data.append('status', 0)
+                                                    dispatch(changeStatusBillUser(data));
+                                                }}
                                             >Hủy đơn</Button>
 
                                         </div>

@@ -6,7 +6,7 @@ export class BillAdminService extends baseService  {
     }
 
     changeStatusBillAdmin = (data) => {
-        return this.post('/bill_edit_status.php',data)
+        return this.post('/bill_edit_status_all.php',data)
     }
 
     changeStatusPaymentBillAdmin = (data) => {

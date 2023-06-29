@@ -84,6 +84,14 @@ export default function BillDenieAcceptAdmin() {
                             <div className="d-flex align-items-end justify-content-end mt-2">
                                 <p className="text-red mr-3">Đơn hàng này đã bị hủy</p>
                             </div>
+                            <div className="d-flex align-items-end justify-content-end mt-2 mr-3">
+                                    {/* <p className="text-red " style={{ fontSize: 15 }}>Thành tiền :{parseInt(item.totalPrice).toLocaleString('vi-VN')}   VNĐ</p> */}
+                                    {item.statusPayment === "1" && item.status === "0" ? (
+                                        <p className="text-red " style={{ fontSize: 15 }}>Vui lòng liên hệ để nhận lại tiền</p>
+                                    ) : (
+                                        <></>
+                                    )}
+                                </div>
                         </div>
 
                     </>

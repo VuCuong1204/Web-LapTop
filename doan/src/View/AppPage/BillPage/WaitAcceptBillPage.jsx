@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getListBillNeedAcceptUser, stateBillUser } from "../../../Reducer/BillReducer/BillReducer";
+import { changeStatusBillUser, getListBillNeedAcceptUser, stateBillUser } from "../../../Reducer/BillReducer/BillReducer";
 import { stateGlobal } from "../../../Reducer/GlobalReducer/GlobalReducer";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Button, Empty } from "antd";
@@ -94,7 +94,7 @@ export default function WaitAcceptBillPage(props) {
                                             data.append('accountId', userInfo.id)
                                             data.append('idBill', item.idBill)
                                             data.append('status', 2)
-                                            dispatch(changeStatusBillAdmin(data));
+                                            dispatch(changeStatusBillUser(data));
                                         }}
                                     >Hủy đơn</Button>
                                 </div>

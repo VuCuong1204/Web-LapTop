@@ -88,7 +88,7 @@ export default function BillTraverPage() {
                                         style={{ width: 120 }}
                                         onClick={() => {
                                             let data = new FormData();
-                                            data.append('accountId', item.idAccount)
+                                            // data.append('accountId', item.idAccount)
                                             data.append('idBill', item.idBill)
                                             data.append('status', 0)
                                             dispatch(changeStatusBillAdmin(data));

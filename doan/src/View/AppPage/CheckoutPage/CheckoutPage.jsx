@@ -11,17 +11,18 @@ import _ from "lodash";
 import { Button, Select } from "antd";
 import { openModalAction } from "../../../Reducer/ModalReducer/ModalReducer";
 import ChooseAddressPage from "../ProductPage/ChooseAddressPage";
-import { getListCartChoose, stateCheckout } from "../../../Reducer/CheckoutReducer/CheckoutReducer";
+import { addBill, changeStatusCart, getListCartChoose, stateCheckout } from "../../../Reducer/CheckoutReducer/CheckoutReducer";
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
+
 export default function CheckoutPage(props) {
 
     const dispatch = useDispatch()
     const { defaultAddress } = useSelector(stateProduct)
     const { userInfo } = useSelector(stateGlobal)
     const { listCartChoose, totalPrice, priceProduct } = useSelector(stateCheckout)
-
-    useEffect(() => {
-        console.log(listCartChoose)
-    }, [listCartChoose])
+    const [state, setState] = useState(0);
+    const history = useHistory()
     useEffect(() => {
         document.title = "Thanh toán"
         renderCart()
@@ -177,13 +178,16 @@ export default function CheckoutPage(props) {
                                 className="ml-2"
                                 style={{ width: 300 }}
                                 options={[{
-                                    value: '1',
+                                    value: 1,
                                     label: 'Thanh toán khi nhận hàng'
                                 },
                                 {
-                                    value: '2',
+                                    value: 2,
                                     label: 'Thanh toán bằng tài khoản ngân hàng'
                                 }]}
+                                onChange={(value) => {
+                                    setState(value)
+                                }}
                             >
 
                             </Select>
@@ -203,11 +207,42 @@ export default function CheckoutPage(props) {
                         </div>
                         <div className="d-flex justify-content-end mr-2 mt-2 pb-3">
                             <Button
+                                disabled={state === 0 || listCartChoose.length === 0 ? true : false}
                                 type="primary"
                                 danger
                                 className="mt-2"
-                                style={{width:120 , height : 40 , borderRadius:5}}
-                                >
+                                style={{ width: 120, height: 40, borderRadius: 5 }}
+                                onClick={async (e) => {
+                                    if (state === 1) {
+                                        for (var i in listCartChoose) {
+                                            let data = new FormData()
+                                            data.append('accountId', userInfo.id)
+                                            data.append('cartId', listCartChoose[i].cartId)
+                                            data.append('status', 1)
+                                            dispatch(changeStatusCart(data))
+                                        }
+                                        let formdatadata = new FormData()
+                                        formdatadata.append("idAccount", userInfo.id)
+                                        formdatadata.append("status", 1)
+                                        formdatadata.append('date', new Date().toLocaleString())
+                                        formdatadata.append('totalPrice', totalPrice)
+                                        formdatadata.append("statusPayment", 0)
+                                        formdatadata.append('idAuto', defaultAddress.idAuto)
+                                        dispatch(addBill(formdatadata, listCartChoose, userInfo.id))
+                                        history.push("/")
+                                    }
+                                    if (state === 2) {
+                                        for (var i in listCartChoose) {
+                                            let data = new FormData()
+                                            data.append('accountId', userInfo.id)
+                                            data.append('cartId', listCartChoose[i].cartId)
+                                            data.append('status', 1)
+                                            dispatch(changeStatusCart(data))
+                                        }
+                                        
+                                    }
+                                }}
+                            >
                                 Thanh toán
                             </Button>
                         </div>

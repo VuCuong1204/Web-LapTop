@@ -91,7 +91,7 @@ export default function BillWaitAcceptAdmin() {
                                         style={{ width: 100 }}
                                         onClick={() => {
                                             let data = new FormData();
-                                            data.append('accountId', item.idAccount)
+                                            // data.append('accountId', item.idAccount)
                                             data.append('idBill', item.idBill)
                                             data.append('status', 0)
                                             dispatch(changeStatusBillAdmin(data));
@@ -105,7 +105,7 @@ export default function BillWaitAcceptAdmin() {
                                         style={{ width: 100 }}
                                         onClick={() => {
                                             let data = new FormData();
-                                            data.append('accountId', item.idAccount)
+                                            // data.append('accountId', item.idAccount)
                                             data.append('idBill', item.idBill)
                                             data.append('status', 2)
                                             dispatch(changeStatusBillAdmin(data));
