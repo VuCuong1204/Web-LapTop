@@ -177,7 +177,7 @@ export const addCartAction = (data) => async (dispatch) => {
             else {
                 dispatch(setTotalPrice(0))
             }
-            dispatch(openNotification("SUCCESS", "Bạn đã xóa sản phẩm ra khỏi giỏ hàng thành công"));
+            dispatch(openNotification("SUCCESS", "Bạn đã thêm sản phẩm ra vào giỏ hàng thành công"));
         }
         else {
             dispatch(openNotification("ERROR", "Đã có lỗi xảy ra vui lòng thử lại sau"))

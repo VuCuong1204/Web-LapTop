@@ -152,7 +152,7 @@ export default function Header() {
                   </li>
                 )}
               </ul>
-              <div className="web-laptop-search">
+              {/* <div className="web-laptop-search">
                 <form>
                   <Search
                     placeholder="Tìm kiếm"
@@ -163,7 +163,7 @@ export default function Header() {
                     }}
                   />
                 </form>
-              </div>
+              </div> */}
             </nav>
           </div>
         </div>

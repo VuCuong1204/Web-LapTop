@@ -11,6 +11,7 @@ export const billUserSlice = createSlice({
         listBillDenieAcceptUser: [],
         listBillCompleteUser: [],
         listBillTraverUser : [],
+        billLast : {},
     },
     reducers: {
         putListAllBillUser: (state, action) => {
@@ -27,6 +28,9 @@ export const billUserSlice = createSlice({
         },
         putBillListTraverUser  : (state,action) => {
             state.listBillTraverUser = action.payload;
+        },
+        putBillLast : (state,action) => {
+            state.billLast = action.payload;
         }
     }
 })
@@ -71,7 +75,12 @@ export const changeStatusBillUser = (data) => async (dispatch) => {
     }
 }
 
+export const getBillLast = (data) => async (dispatch) => {
+    const response = await billservice.getListBillById(data);
+    dispatch(putBillLast(response.data.data[0]))
+}
 
-export const { putListAllBillUser, putListBillNeedAcceptUser, putListBillDenieAcceptUser, putBillListCompleteUser , putBillListTraverUser} = billUserSlice.actions
+
+export const { putListAllBillUser,putBillLast, putListBillNeedAcceptUser, putListBillDenieAcceptUser, putBillListCompleteUser , putBillListTraverUser} = billUserSlice.actions
 export const stateBillUser = (state) => state.billuser
 export default billUserSlice.reducer

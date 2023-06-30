@@ -28,6 +28,8 @@ import PopUp from "./View/SupportView/PopUp/Popup";
 import CartPage from "./View/AppPage/CartPage/CartPage";
 import CheckoutPage from "./View/AppPage/CheckoutPage/CheckoutPage";
 import ConfirmCartPage from "./View/AdminPage/ConfirmCartPage";
+import SearchByProducer from "./View/AppPage/SearchByProducer/SearchByProducer";
+import PaymentPage from "./View/AppPage/CheckoutPage/PaymentPage";
 
 function App() {
 
@@ -48,6 +50,8 @@ function App() {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/Login" component={Login} />
+        <Route exact path="/SearchByProducer" component={SearchByProducer} />
+        <Route exact path="/Payment" component={PaymentPage} />
         <Route exact path="/ProductPage/:id" component={ProductPage} />
         <Route exact path="/Signin" component={Signin} />
         <Route exact path="/NotFound" component={PageNotFound} />

@@ -86,6 +86,15 @@ export const changeStatusPaymentBillAdmin = (data) => async (dispatch) => {
     }
 }
 
+export const changeStatusPaymentUser = (data) => async (dispatch) => {
+    const response = await billadminservice.changeStatusPaymentBillAdmin(data);
+    if(response.data.code === 0) {
+        dispatch(openNotification("SUCCESS", "Bạn đã thanh toán hóa đơn thành công"))
+    }
+    else {
+        dispatch(openNotification("ERROR", "Đã có lỗi xảy ra vui lòng thử lại sau"))
+    }
+}
 export const completeBillAction = (data) => async (dispatch) => {
     const response = await billadminservice.completeBill(data);
     dispatch(putListAllBill(response.data.data))

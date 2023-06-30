@@ -9,6 +9,7 @@ import Footer from '../../Footer/Footer'
 import { setTrueLoading, stateLoadingPage } from '../../../Reducer/LoadingReducer/LoadingPageReducer'
 import LoadingPage from '../../SupportView/LoadingPage/LoadingPage'
 
+
 export default function HomePage(props) {
   useEffect(() => {
     document.title = "Trang chủ"
@@ -44,7 +45,7 @@ export default function HomePage(props) {
                             {/* <Link to={`/Login/${item.productTypeId}?name=${name}`} style={{ width: "100%", height: "100%" }}>
                         <img src={`${item.productTypeImage}`} alt={`${item.manufacturer}`} className="image-product" />
                       </Link> */}
-                            <Link to={`${href}`} style={{ width: "100%", height: "100%" }}>
+                            <Link to={`/SearchByProducer?productid=${item.productTypeId}`} style={{ width: "100%", height: "100%" }}>
                               <img src={`${item.productTypeImage}`} alt={`${item.manufacturer}`} className="image-product" />
                             </Link>
                           </div>

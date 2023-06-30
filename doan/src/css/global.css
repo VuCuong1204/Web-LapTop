@@ -892,3 +892,11 @@ a {
 a div {
   color : black
 }
+
+.image-QR {
+  background-image :url(/src/css/Image/support-ui.jpg);
+  height: 400px;
+  width: 400px;
+  background-repeat : no-repeat;
+  background-size : cover;
+}
