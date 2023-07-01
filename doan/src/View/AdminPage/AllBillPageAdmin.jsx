@@ -8,6 +8,9 @@ import axios from "axios";
 import { URLAPI } from "../../Template/systemConfig";
 import { openNotification } from "../SupportView/Notification/Notification";
 import { useHistory, Link } from "react-router-dom/cjs/react-router-dom.min";
+import province from "../../Template/AddressJson/province.json"
+import district from "../../Template/AddressJson/district.json"
+import ward from "../../Template/AddressJson/ward.json"
 
 export default function AllBillPageAdmin() {
     const dispatch = useDispatch();
@@ -17,6 +20,35 @@ export default function AllBillPageAdmin() {
     useEffect(() => {
         dispatch(getListAllBill());
     }, [])
+
+    const renderAddress = (data) => {
+        try {
+            const json = JSON.parse(data.address)
+            let provinceName = null;
+            let districtName = null;
+            let wardName = null;
+            if (json.province) {
+                provinceName = province.find((item) => {
+                    return item.id === json.province;
+                }).name;
+                if (json.district) {
+                    districtName = district.find((item) => {
+                        return item.id === json.district;
+                    }).name;
+                    if (json.ward) {
+                        wardName = ward.find((item) => {
+                            return item.id === json.ward;
+                        }).name;
+                    }
+                }
+            }
+            const result = json.addressdetail + "," + wardName + "," + districtName + "," + provinceName
+            return <span className="mr-2">{result}</span>;
+        } catch (e) {
+            return <p className="mr-2">{data.address}</p>
+        }
+
+    }
 
     return (
         <>
@@ -33,12 +65,16 @@ export default function AllBillPageAdmin() {
                                 <div className="web-laptop-billadminpage-item">
                                     <div className="d-flex align-items-center justify-content-between" style={{ borderBottom: "1px solid #a0a0a0" }}>
                                         <div className="d-flex align-items-center">
-                                            {/* <span class="material-icons">
-                                                person_outline
-                                            </span>
                                             {
-                                                item.cartInfo[0].username
-                                            } */}
+                                                item.cartInfo[0].username ? (<>
+                                                    <span class="material-icons">
+                                                        person_outline
+                                                    </span>
+                                                    {
+                                                        item.cartInfo[0].username
+                                                    }
+                                                </>) : (<></>)
+                                            }
                                         </div>
                                         <div>
                                             {
@@ -86,6 +122,20 @@ export default function AllBillPageAdmin() {
                                             </Link>
                                         ))
                                     }
+                                </div>
+                                <div style={{ padding: "12px 12px 12px 12px" }} >
+                                    <div style={{ width: "100%", borderBottom: '1px solid #a0a0a0', paddingBottom: '20px' }}>
+                                        <strong>Thông tin giao hàng</strong>
+                                        <div className="d-flex  mt-2 mr-3">
+                                            <p className="text-black " style={{ fontSize: 15 }}>Người nhận : {item.fullname}</p>
+                                        </div>
+                                        <div className="d-flex  mt-2 mr-3">
+                                            <p className="text-black " style={{ fontSize: 15 }}>Số điện thoại : {item.phone}</p>
+                                        </div>
+                                        <div className="d-flex  mt-2 mr-3">
+                                            <p className="text-black " style={{ fontSize: 15 }}>Địa chỉ : {renderAddress(item)}</p>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="d-flex align-items-end justify-content-end mt-2 mr-3">
                                     <p className="text-black " style={{ fontSize: 15 }}>Thành tiền :{parseInt(item.totalPrice).toLocaleString('vi-VN')}   VNĐ</p>
